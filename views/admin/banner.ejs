@@ -1,0 +1,118 @@
+<%- include('../admin_layout/adminHeader.ejs') %>
+
+
+
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Banner View</h2>
+           
+        </div>
+        <div>
+            <!-- <a href="#" class="btn btn-light rounded font-md">Export</a>
+            <a href="#" class="btn btn-light rounded font-md">Import</a> -->
+            <a href="/admin/addbanner" class="btn btn-primary btn-sm rounded">Create new</a>
+        </div>
+    </div>
+    <!-- <header class="card card-body mb-4">
+        <div class="row gx-3">
+            <div class="col-lg-4 col-md-6 me-auto">
+                <input type="text" placeholder="Search..." class="form-control" />
+            </div>
+            <div class="col-lg-2 col-6 col-md-3">
+                <select class="form-select">
+                    <option>All category</option>
+                    <option>Electronics</option>
+                    <option>Clothings</option>
+                    <option>Something else</option>
+                </select>
+            </div>
+            <div class="col-lg-2 col-6 col-md-3">
+                <select class="form-select">
+                    <option>Latest added</option>
+                    <option>Cheap first</option>
+                    <option>Most viewed</option>
+                </select>
+            </div>
+        </div>
+    </header> -->
+    <!-- card-header end// -->
+    <div class="row">
+        <% banner.forEach(banner => { %>
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="card card-product-grid border border-dark" style="height: 300px;">
+                <a href="#" class="img-wrap mt-2"> <img src="/bannerImages/<%= banner.banner_image %>"  /> </a>
+                <p class="text-dark mt-4 p-1">Banner Name: <%= banner.bname %></p>
+                <p class="text-dark p-1">Starting Date: <%= banner.starting.toLocaleDateString() %></p>
+                <p class="text-dark p-1">Expiry: <%= banner.ending.toLocaleDateString() %></p>
+                <div class="info-wrap">
+                    <div class="dropdown float-end">
+                        
+                    
+                    </div>
+                    <a href="#" class="title"></a>
+                    
+                    <!-- price-wrap.// -->
+                </div>
+            </div>
+            <!-- card-product  end// -->
+        </div>
+        <% }); %>
+       
+       
+            <!-- card-product  end// -->
+    </div>
+        <!-- col.// -->
+        
+        <!-- col.// -->
+        
+        <!-- col.// -->
+       
+        <!-- col.// -->
+        
+        <!-- col.// -->
+      
+        <!-- col.// -->
+    </div>
+    <!-- row.// -->
+
+
+    <!-- <div class="pagination-area mt-15 mb-50">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start">
+                <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                <li class="page-item"><a class="page-link" href="#">02</a></li>
+                <li class="page-item"><a class="page-link" href="#">03</a></li>
+                <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                <li class="page-item"><a class="page-link" href="#">16</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a>
+                </li>
+            </ul>
+        </nav>
+    </div> -->
+
+</section>
+
+
+<script>
+    function confirmDelete(categoryId, event) {
+        var confirmation = confirm("Are you sure you want to delete?");
+
+        if (!confirmation) {
+            // If the user clicks "Cancel", prevent the default anchor tag behavior
+            event.preventDefault();
+            console.log('Deletion canceled');
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+<%- include('../admin_layout/adminFooter.ejs') %>

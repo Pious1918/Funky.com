@@ -1,0 +1,109 @@
+
+
+
+
+<%- include('../layouts/header.ejs') %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <form id="addressForm" method="post" action="/addaddress">
+        <div class="card rounded-0">
+          <div class="card-header">
+            <h5 class="fw-bold mb-0">Add New Address</h5>
+          </div>
+          <div class="card-body">
+            <div class="">
+              <h6 class="fw-bold mb-3">Contact Details</h6>
+              <div class="mb-3">
+                <label for="floatingName" class="form-label">Name</label>
+                <input type="text" class="form-control rounded-0" id="floatingName" name="name" placeholder="Name" required>
+              </div>
+              <div class="mb-3">
+                <label for="floatingMobileNo" class="form-label">Mobile No</label>
+                <input type="text" class="form-control rounded-0" id="floatingMobileNo" name="mobileNo" placeholder="Mobile No" required>
+              </div>
+              <div class="mb-3">
+                <label for="floatingExtraMobileNo" class="form-label">Extra Mobile No (Optional)</label>
+                <input type="text" class="form-control rounded-0" id="floatingExtraMobileNo" name="extraMobileNo" placeholder="Extra Mobile No">
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <h6 class="fw-bold mb-3">Address</h6>
+              <div class="mb-3">
+                <label for="floatingPinCode" class="form-label">Pin Code</label>
+                <input type="text" class="form-control rounded-0" id="floatingPinCode" name="pinCode" placeholder="Pin Code" required>
+              </div>
+              <div class="mb-3">
+                <label for="floatingAddress" class="form-label">Address (House No, Building, Street, Area)</label>
+                <input type="text" class="form-control rounded-0" id="floatingAddress" name="address" placeholder="Address" required>
+              </div>
+              <div class="mb-3">
+                <label for="floatingLocalityTown" class="form-label">Locality/Town</label>
+                <input type="text" class="form-control rounded-0" id="floatingLocalityTown" name="localityTown" placeholder="Locality/Town" required>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="mb-3">
+                    <label for="floatingCity" class="form-label">City/District</label>
+                    <input type="text" class="form-control rounded-0" id="floatingCity" name="city" placeholder="City/District" required>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="mb-3">
+                    <label for="floatingState" class="form-label">State</label>
+                    <input type="text" class="form-control rounded-0" id="floatingState" name="state" placeholder="State" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="defaultAddress" class="form-label">Make Default Address</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="defaultAddress" id="defaultAddressYes" value="true">
+                  <label class="form-check-label" for="defaultAddressYes">Yes</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="defaultAddress" id="defaultAddressNo" value="false" checked>
+                  <label class="form-check-label" for="defaultAddressNo">No</label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer">
+            <div class="d-grid">
+              <button type="submit" class="btn btn-dark py-3 px-5 btn-ecomm">Add Address</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Add a script to handle radio button changes -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const radioButtons = document.querySelectorAll('input[name="defaultAddress"]');
+      radioButtons.forEach(radioButton => {
+        radioButton.addEventListener('change', () => {
+          // Uncheck other radio buttons when one is selected
+          radioButtons.forEach(otherRadioButton => {
+            if (otherRadioButton !== radioButton) {
+              otherRadioButton.checked = false;
+            }
+          });
+        });
+      });
+    });
+  </script>
+  
+
+<%- include('../layouts/footer.ejs') %>

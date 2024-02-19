@@ -1,0 +1,99 @@
+<%- include('../admin_layout/adminHeader.ejs') %>
+
+<section class="p-5">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-12 col-md-12 col-lg-12">
+                <form action="/admin/addProoffer" method="post">
+
+                  <div class="mb-3">
+
+                    <label for="documentSelect" class="form-label text-dark">Select the product</label>
+                    
+                    <select class="form-select border border-success" id="documentSelect" name="pro_id">
+                        <option value="">Select a document</option>
+                        <% products.forEach(products => { %>
+                        <option value="<%= products._id%>" name="pro_id"><%= products.name%></option>
+                        <% }); %>
+                        <!-- Add more options as needed -->
+                    </select>
+                   
+                  </div>
+
+                    <!-- <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label text-dark">Product Name</label>
+                      <input type="email" class="form-control border border-success" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div> -->
+
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label text-dark">Discount Percentage</label>
+                      <input type="text" name="discount" class="form-control border border-success" id="exampleInputPassword1">
+                    </div>
+                   
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+
+            </div>
+          
+        </div>
+    </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="card-body">
+          <div class="table-responsive">
+              <table class="table table-hover border border-success">
+                  <thead class=" border border-success">
+                      <tr>
+                          <!-- <th>#ID</th> -->
+                          <th scope="col">Product Name</th>
+                          <th scope="col">Offer Percentage</th>
+                          <th scope="col">Action</th>
+                          <!-- <th scope="col">Status</th> -->
+                          <!-- <th scope="col">Date</th> -->
+                          <!-- <th scope="col" class="text-end">Action</th> -->
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <% offerProductlist.forEach(products => { %>
+                      <tr>
+                          <!-- <td>0901</td> -->
+                          <td><b><%= products.productDetails.name%></b></td>
+                          <td><%= products.productOffer%></td>
+                          <td><a class=" btn btn-danger text" href="/admin/deleteproOffer?id=<%= products._id %>" onclick="confirmDelete('<%= products._id %>' , event)">Delete</a></td>
+                          <!-- <td><span class="badge rounded-pill alert-warning">Pending</span></td> -->
+                          <!-- <td>03.12.2020</td> -->
+                          <!-- <td class="text-end">
+                              <a href="#" class="btn btn-md rounded font-sm">Detail</a>
+                          
+                          </td> -->
+                      </tr>
+                    
+                    
+
+                      <% }); %> 
+                  </tbody>
+              </table>
+          </div>
+          <!-- table-responsive //end -->
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+<%- include('../admin_layout/adminFooter.ejs') %>

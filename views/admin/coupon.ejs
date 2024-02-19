@@ -1,0 +1,57 @@
+<%- include('../admin_layout/adminHeader.ejs') %>
+
+
+<section>
+    <h1>Coupons</h1>
+    
+    <div class="container">
+
+        <div>
+            <!-- <a href="#" class="btn btn-light rounded font-md">Export</a>
+            <a href="#" class="btn btn-light rounded font-md">Import</a> -->
+            <a href="/admin/addcoupon" class="btn btn-primary btn-sm rounded">New Coupon</a>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <!-- <th scope="col">Sl No</th> -->
+                        <th scope="col">Coupon Code</th>
+                        <th scope="col">Discount(%)</th>
+                        <th scope="col">Valid From</th>
+                        <th scope="col">Valid To</th>
+                        <th scope="col">Min Amount</th>
+                        <th scope="col">Max Amount</th>
+                        <!-- <th scope="col">Status</th> -->
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% currentCoupons.forEach(coupon=>{ %>
+                        
+                      <tr>
+                        <!-- <th scope="row">3</th> -->
+                        <td><%= coupon.code%></td>
+                        <td><%= coupon.discountPercentage%></td>
+                        <td><%= coupon.startingDate.toLocaleDateString() %></td>
+                        <td><%= coupon.expirationDate.toLocaleDateString() %></td>
+                        <td><%= coupon.minTotal%></td>
+                        <td><%= coupon.maxTotal%></td>
+                        <!-- <td>active</td> -->
+
+                      </tr>
+                      <% }); %>
+                    </tbody>
+                  </table>
+                  
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<%- include('../admin_layout/adminFooter.ejs') %>
