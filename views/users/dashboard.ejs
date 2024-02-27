@@ -13,9 +13,10 @@
    <!--start product details-->
    <section class="section-padding">
     <div class="container p-5">
+
       <div class="d-flex align-items-center px-3 py-2 border mb-4">
         <div class="text-start">
-          <h4 class="mb-0 h4 fw-bold">Account - Dashboard</h4>
+          <h4 class="mb-0 h4 fw-bold"><h3>welcome <%= name%></h3></h4>
        </div>
       </div>
      <div class="btn btn-dark btn-ecomm d-xl-none position-fixed top-50 start-0 translate-middle-y"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarFilter"><span><i class="bi bi-person me-2"></i>Account</span></div>
@@ -28,7 +29,10 @@
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                   </div>
                   <div class="offcanvas-body account-menu">
+                   
                     <div class="list-group w-100 rounded-0">
+                      
+                      
                       <a href="/userdashboard" class="list-group-item active"><i class="bi bi-house-door me-2"></i>Dashboard</a>
                       <a href="/orders" class="list-group-item"><i class="bi bi-basket3 me-2"></i>Orders</a>
                       <a href="/profile" class="list-group-item"><i class="bi bi-person me-2"></i>Profile</a>
@@ -36,9 +40,10 @@
                       <a href="/editpass" class="list-group-item"><i class="bi bi-pencil me-2"></i>Change Password</a>
                       <a href="/address" class="list-group-item"><i class="bi bi-pin-map me-2"></i>Saved Address</a>
                       <a href="/wallet" class="list-group-item"><i class="bi bi-suit-heart me-2"></i>Wallet</a>
-                      <a href="wishlist.html" class="list-group-item"><i class="bi bi-suit-heart me-2"></i>Wishlist</a>
                       <a href="/referal" class="list-group-item"><i class="bi bi-suit-heart me-2"></i>Referal Code</a>
-                      <!-- <a href="authentication-login.html" class="list-group-item"><i class="bi bi-power me-2"></i>Logout</a> -->
+                     
+                    
+                      <a href="/logout" class="list-group-item"><i class="bi bi-power me-2"></i>Logout</a>
                     </div>
                   </div>
                 </div>
@@ -75,7 +80,7 @@
                  </a>
                </div>
                <div class="col">
-                <a href="wishlist.html">
+                <a href="/wishlist">
                 <div class="card rounded-0">
                   <div class="card-body p-5">
                       <div class="text-center">
@@ -86,7 +91,7 @@
                 </div>
                </a>
                </div>
-               <div class="col">
+               <!-- <div class="col">
                 <a href="account-orders.html">
                 <div class="card rounded-0">
                   <div class="card-body p-5">
@@ -97,9 +102,9 @@
                   </div>
                 </div>
                </a>
-               </div>
+               </div> -->
                <div class="col">
-                <a href="account-saved-address.html">
+                <a href="/address">
                 <div class="card rounded-0">
                   <div class="card-body p-5">
                       <div class="text-center">
@@ -123,7 +128,7 @@
                </a>
                </div>
                <div class="col">
-                <a href="account-profile.html">
+                <a href="/profile">
                 <div class="card rounded-0">
                   <div class="card-body p-5">
                       <div class="text-center">

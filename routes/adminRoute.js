@@ -1,5 +1,5 @@
 const express = require('express')
-const { adminLogin,adminRegister, adminLoggedIN ,adminLogout, customerDetails, dashLoad, blockUser, unblockUser , orderList,upload ,detailedOpen, statusChanger, daily , adminCoupon , addAdminCoupon , newCoupon , customSalesReport,adminReferral,addReferral,newReferral,updateRef,editRef ,banner,addbanner,addbannerLoad} = require('../controllers/adminController')
+const { adminLogin,adminRegister, adminLoggedIN ,adminLogout, customerDetails, dashLoad, blockUser, unblockUser ,deletecoupon, orderList,upload ,detailedOpen, statusChanger, daily , adminCoupon , addAdminCoupon , newCoupon , customSalesReport,adminReferral,addReferral,newReferral,updateRef,editRef ,banner,addbanner,addbannerLoad,deleteBanner} = require('../controllers/adminController')
 const { currentAdmin, validateAdminToken } = require('../JWT');
 const admin_Route = express()
 
@@ -38,7 +38,7 @@ admin_Route.get('/custom-sales-report', customSalesReport);
 admin_Route.get('/coupon', adminCoupon)
 admin_Route.get('/addcoupon', addAdminCoupon)
 admin_Route.post('/addcouponn', newCoupon)
-
+admin_Route.get('/deletecou' ,deletecoupon)
 admin_Route.get('/referral', adminReferral)
 
 admin_Route.get('/addReferral', addReferral)
@@ -54,6 +54,6 @@ admin_Route.get('/banner' ,banner)
 
 admin_Route.get('/addbanner' ,addbannerLoad)
 admin_Route.post('/addbanner' , upload.single('banner_image'), addbanner)
-
+admin_Route.delete('/deleteban/:id' , deleteBanner)
 
 module.exports= admin_Route

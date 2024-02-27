@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 const sharp = require('sharp');
 const productModel = require('../models/productModel');
 
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/categoryUploads');
@@ -109,7 +110,7 @@ const viewCategory = async(req,res)=>{
         
     const fetchAllCategories = await categoryModel.find().sort({ createdAt: -1 , updatedAt: -1})
 
-        console.log(fetchAllCategories[0].category_image)
+        
     res.render("category" , {categories:fetchAllCategories})
         
     } catch (error) {
@@ -120,6 +121,7 @@ const viewCategory = async(req,res)=>{
     }
 
 }
+
 
 
 

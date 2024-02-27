@@ -29,8 +29,10 @@
                       <a href="/editpass" class="list-group-item"><i class="bi bi-pencil me-2"></i>Change Password</a>
                       <a href="/address" class="list-group-item"><i class="bi bi-pin-map me-2"></i>Saved Address</a>
                       <a href="/wallet" class="list-group-item"><i class="bi bi-suit-heart me-2"></i>Wallet</a>
-                      <a href="wishlist.html" class="list-group-item"><i class="bi bi-suit-heart me-2"></i>Wishlist</a>
+                      <!-- <a href="wishlist.html" class="list-group-item"><i class="bi bi-suit-heart me-2"></i>Wishlist</a> -->
                       <a href="/referal" class="list-group-item"><i class="bi bi-suit-heart me-2"></i>Referal Code</a>
+                      <a href="/logout" class="list-group-item"><i class="bi bi-power me-2"></i>Logout</a>
+
                       <!-- <a href="authentication-login.html" class="list-group-item"><i class="bi bi-power me-2"></i>Logout</a> -->
                     </div>
                   </div>
@@ -119,7 +121,7 @@
 
 
 
-                        <form id="returnForm" action="/returnproduct?orderId=<%= items._id %>&prodId=<%= items.items.product_id %>" method="POST" onsubmit="return validateForm()">
+                        <form>
                           <button type="submit" class="btn btn-danger btn-outline-dark btn-ecomm mt-3" onclick="returnproduct('<%= items.items.product_id %>','<%= items._id %>',event)">Return Product</button>
                       </form>
                       

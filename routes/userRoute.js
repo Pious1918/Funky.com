@@ -41,6 +41,12 @@ user_route.get('/logout' , userController.logout)
 user_route.get('/forget' , userController.forget)
 user_route.post('/forget' , userController.typedEmail)
 
+user_route.post('/newPass' , userController.newPass)
+// password confirmation
+user_route.patch('/conPass' , userController.confiPass)
+
+
+
 user_route.get('/coupon' , userController.userCoupon)
 
 

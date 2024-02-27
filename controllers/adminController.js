@@ -186,12 +186,19 @@ const dashLoad =  async(req, res) => {
         },
       },
     ]);
+    console.log("totalRevenue",totalRevenue)
 
     // console.log("revvenue",totalRevenue)
 
-    const [result] = totalRevenue;
-    const { totalAmount } = result;
-//  console.log("revvenue",totalRevenue)
+    if (totalRevenue.length > 0) {
+      var { totalAmount } = totalRevenue[0]; // Access totalAmount from the first element of the array
+      console.log("totalRevenue", totalRevenue);
+      console.log("totalAmount", totalAmount); // This should print the total revenue
+  } else {
+      console.log("No revenue data available");
+  }
+  
+
 
 
     const total = await orderdb.aggregate([
@@ -222,13 +229,17 @@ const dashLoad =  async(req, res) => {
       },
     ]);
   
+    if(total>0){
+      const totalCancelledAmount = total[0].totalCancelledAmount;
+      // console.log("tottl",total)
+  
+      var Revenue = totalAmount[0] - totalCancelledAmount;
+      var cancelledOrder = total[0].totalCount;
 
+    }
 
-    const totalCancelledAmount = total[0].totalCancelledAmount;
-    // console.log("tottl",total)
-
-    const Revenue = totalAmount - totalCancelledAmount;
-    const cancelledOrder = total[0].totalCount;
+console.log("RevenueRevenue",Revenue)
+  
     // console.log("Revenue",Revenue)
 
     // // Fetch data for the chart (example: daily order count)
@@ -290,7 +301,7 @@ const dashLoad =  async(req, res) => {
 
     
 
-    res.render("adminHome" , {totalRevenue, totalOrders ,totaluser ,totalProduct, totalCategory ,Revenue,cancelledOrder, dailyLabels,
+    res.render("adminHome" , {totalRevenue,totalAmount, totalOrders ,totaluser ,totalProduct, totalCategory ,Revenue,cancelledOrder, dailyLabels,
       dailyData,
       monthlyLabels,
       monthlyData,});
@@ -590,7 +601,13 @@ const newCoupon = async(req,res)=>{
   try {
 
 
+
     const { name,discount,starting,ending,minprice,maxprice } = req.body
+
+    const existingCoupon = await couponModel.findOne({ code: { $regex: new RegExp("^" + name + "$", "i") } });
+        if (existingCoupon) {
+          res.render("addCoupon",{message:"coupon name already exists"})
+        }
 
     const newcoupon = new couponModel({
 
@@ -612,6 +629,31 @@ const newCoupon = async(req,res)=>{
     console.log("error from newCoupon",error)
   }
 }
+
+
+
+// delete coupon 
+
+
+const deletecoupon = async(req,res)=>{
+
+  try {
+
+      const coupon = req.query.id
+      const couponoffer = await couponModel.findByIdAndDelete({_id:coupon})
+
+  
+  
+
+      res.redirect('/admin/coupon')
+      
+  } catch (error) {
+      console.log("error from updateProductOffer",error)
+      
+  }
+}
+
+
 
 
 
@@ -732,6 +774,23 @@ const banner = async(req,res)=>{
 }
 
 
+const deleteBanner = async(req,res)=>{
+
+  try {
+
+    const banId = req.params.id
+    console.log("idd",banId)
+    const bannerName = await bannerModel.findByIdAndDelete({_id:banId})
+    console.log("bannerName",bannerName)
+    res.status(200).send({ message: "Banner deleted successfully" });
+    // res.redirect("/admin/banner")
+  } catch (error) {
+    console.log("error from deleteBanner",error)
+    res.status(500).send({ error: "Internal server error" });
+  }
+}
+
+
 
 
 const addbannerLoad = async(req,res)=>{
@@ -740,7 +799,7 @@ const addbannerLoad = async(req,res)=>{
   try {
       
   
-          res.render('addbanner', { message: "Category Uploaded" });
+    res.render('addbanner', { message: "Category Uploaded" });
 
 
 
@@ -761,7 +820,7 @@ const addbanner = async(req,res)=>{
   try {
       
       
-      const {bname,starting,ending ,bannerdescription,discount }= req.body
+      const {bname }= req.body
 
       const banner_image = path.basename(req.file.path);
 
@@ -782,10 +841,7 @@ const addbanner = async(req,res)=>{
             bname: bname,
               banner_image: banner_image, // Save the cropped image filename
               
-              starting:starting,
-              ending:ending,
-              bannerdescription:bannerdescription,
-              discount:discount
+             
           });
 
           await newBanner.save();
@@ -821,6 +877,7 @@ module.exports = {
   adminCoupon,
   addAdminCoupon,
   newCoupon,
+  deletecoupon,
   customSalesReport,
   adminReferral,
   addReferral,
@@ -830,6 +887,7 @@ module.exports = {
   banner,
   addbanner,
   upload,
-  addbannerLoad
+  addbannerLoad,
+  deleteBanner
 
 };

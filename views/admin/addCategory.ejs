@@ -176,5 +176,69 @@
 
 
 
+<script>
+    function validateForm() {
+        var name = document.getElementById("product_title").value;
+        var discount = document.getElementById("product_color").value;
+        var startingDate = document.getElementById("starting").value;
+        var expiryDate = document.getElementById("ending").value;
+        var minPrice = document.getElementById("minprice").value;
+        var maxPrice = document.getElementById("maxprice").value;
+
+        if (name == "") {
+            alert("Please enter a coupon name.");
+            return false;
+        }
+
+        if (discount == "") {
+            alert("Please enter a discount percentage.");
+            return false;
+        }
+
+        if (isNaN(discount) || discount < 0 || discount > 100) {
+            alert("Discount percentage must be a number between 0 and 100.");
+            return false;
+        }
+
+        if (startingDate == "") {
+            alert("Please select a starting date.");
+            return false;
+        }
+
+        if (expiryDate == "") {
+            alert("Please select an expiry date.");
+            return false;
+        }
+
+        if (minPrice == "") {
+            alert("Please enter a minimum total.");
+            return false;
+        }
+
+        if (isNaN(minPrice) || minPrice < 0) {
+            alert("Minimum total must be a non-negative number.");
+            return false;
+        }
+
+        if (maxPrice == "") {
+            alert("Please enter a maximum total.");
+            return false;
+        }
+
+        if (isNaN(maxPrice) || maxPrice < 0) {
+            alert("Maximum total must be a non-negative number.");
+            return false;
+        }
+
+        if (parseFloat(minPrice) > parseFloat(maxPrice)) {
+            alert("Minimum total cannot be greater than Maximum total.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+
 
 <%- include('../admin_layout/adminFooter.ejs') %>

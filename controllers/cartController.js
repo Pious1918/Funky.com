@@ -14,12 +14,14 @@ const axios = require('axios')
 
 const loadCart = async (req, res) => {
   try {
-    const currentUser = res.locals.user;
 
+    const currentUser = res.locals.user;
+    delete req.session.couponPrice
+    console.log("req.session.couponPrice",req.session.couponPrice)
     if (!currentUser) {
       return res.redirect('/login'); // Redirect to login if not logged in
     }
-console.log("cartt",currentUser)
+// console.log("cartt",currentUser)
     const cartDetails = await cartModel.aggregate([
       {
         $match: { user_id: currentUser._id },
@@ -38,9 +40,12 @@ console.log("cartt",currentUser)
       {
         $unwind: "$productDetails", // Unwind the array of product details
       },
+      {
+        $match:{'productDetails.isDeleted':false}
+      }
     ]);
 
-    console.log("cartdetaails" , cartDetails)
+    // console.log("cartdetaails" , cartDetails)
     
 
     if (!cartDetails || cartDetails.length === 0) {

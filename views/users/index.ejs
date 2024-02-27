@@ -1,772 +1,234 @@
 <%- include('../layouts/header.ejs') %>
 
 <style>
-	.bi.bi-heart {
+  .bi.bi-heart {
     color: black; /* Change this to your default color */
-}
+  }
 
-/* Heart icon color when product is in the wishlist */
-.bi.bi-heart.in-wishlist::before {
+  /* Heart icon color when product is in the wishlist */
+  .bi.bi-heart.in-wishlist::before {
     color: red; /* Change this to your desired color */
-}
-  </style>
+  }
+</style>
 
+<!--start top header-->
 
-     <!--page loader-->
-     <!-- <div class="loader-wrapper">
-      <div class="d-flex justify-content-center align-items-center position-absolute top-50 start-50 translate-middle">
-        <div class="spinner-border text-dark" role="status">
-          <span class="visually-hidden">Loading...</span>
+<!--start page content-->
+<div class="page-content">
+  <!--start carousel-->
+  <section class="slider-section bg-dark">
+    <div class="container">
+      <div
+        id="carouselExampleCaptions"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-indicators">
+          <% banner.forEach((banner, index) => { %>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleCaptions"
+            data-bs-slide-to="<%= index %>"
+            class="<%= index === 0 ? 'active' : '' %>"
+            aria-current="true"
+          ></button>
+          <% }); %>
         </div>
-      </div>
-    </div> -->
-   <!--end loader-->
-
-  <!--start top header-->
- 
-
-
-  <!--start page content-->
-  <div class="page-content">
-
-    <!--start carousel-->
-    <section class="slider-section bg-dark">
-
-
-
-      <div class="container">
-        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-indicators">
-            <% banner.forEach((banner, index) => { %>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="<%= index %>"
-                    class="<%= index === 0 ? 'active' : '' %>" aria-current="true"></button>
-            <% }); %>
-        </div>
-          <div class="carousel-inner" style="height: 600px;">
-            <% banner.forEach(banner => { %>
-            <div class="carousel-item active ">
-             
-              <div class="row d-flex align-items-center">
-               
-                <!-- <div class="col d-none d-lg-flex justify-content-center">
-                  <div class="">
-                    <h3 class="h3 fw-light text-dark fw-bold"></h3>
-                    <h1 class="h1 text-white fw-bold"></h1>
-                    <p class="text-white fw-bold"><i></i></p>
-                    <div class=""><a class="" href="shop-grid.html"></a>
-                    </div>
-                  </div>
-                </div> -->
-               
-               
-                  <img src="/bannerImages/<%= banner.banner_image %>" class="img-fluid" alt="...">
-                
-              </div>
+        <div class="carousel-inner">
+          <% banner.forEach((banner, index) => { %>
+          <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+            <div class="row d-flex align-items-center">
+              <img
+                src="/bannerImages/<%= banner.banner_image %>"
+                class="img-fluid"
+                alt="..."
+              />
             </div>
-  
-  
-         
-            <% }); %>
           </div>
-          
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+          <% }); %>
         </div>
-
-
-
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-      
+    </div>
+  </section>
+  <!--end carousel-->
 
-   
-    </section>
-    <!--end carousel-->
+  <!--start Featured Products slider-->
+  <section class="section-padding">
+    <div class="container">
+      <div class="text-center pb-3">
+        <h3 class="mb-0 h3 fw-bold">Featured Products</h3>
+      </div>
 
+      <div class="product-thumbs">
+        <% products.forEach(product => { %> <% if (!product.isDeleted) { %>
+        <div class="card border border-dark" style="height: 450px">
+          <div class="position-relative overflow-hidden">
+            <div
+              class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0"
+            >
+              <!-- <a href="javascript:;"><i class="bi bi-heart"></i></a> -->
 
-    <!--start Featured Products slider-->
-    <section class="section-padding">
-      <div class="container">
-        <div class="text-center pb-3">
-          <h3 class="mb-0 h3 fw-bold">Featured Products</h3>
-         
-        </div>
-       
-        <div class="product-thumbs ">
-          <% products.forEach(product => { %>
-          <div class="card border border-primary" style="height: 450px;">
-            <div class="position-relative overflow-hidden">
-              <div
-                class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0">
-
-
-                <!-- <a href="javascript:;"><i class="bi bi-heart"></i></a> -->
-
-                <div class="icon-wishlist">
-                  <% if (wishlist && wishlist.products.some(wishItem => wishItem.product_id.toString() === product._id.toString())) { %>
-                    <!-- Product is in the wishlist, display heart icon in red color -->
-                    <a href="#" class="remove-from-wishlist" data-product-id="<%= product._id %>"><i class="bi bi-heart in-wishlist"></i></a>
-                  <% } else { %>
-                    <!-- Product is not in the wishlist, display default heart icon -->
-                    <a href="#" class="add-to-wishlist" data-product-id="<%= product._id %>"><i class="bi bi-heart"></i></a>
-                  <% } %>
-                </div>
-
-
-
-
-
-                <a href="javascript:;"><i class="bi bi-basket3"></i></a>
-                <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#QuickViewModal"><i
-                    class="bi bi-zoom-in"></i></a>
+              <div class="icon-wishlist">
+                <% if (wishlist && wishlist.products.some(wishItem =>
+                wishItem.product_id.toString() === product._id.toString())) { %>
+                <!-- Product is in the wishlist, display heart icon in red color -->
+                <a
+                  href="#"
+                  class="remove-from-wishlist"
+                  data-product-id="<%= product._id %>"
+                  ><i class="bi bi-heart in-wishlist"></i
+                ></a>
+                <% } else { %>
+                <!-- Product is not in the wishlist, display default heart icon -->
+                <a
+                  href="#"
+                  class="add-to-wishlist"
+                  data-product-id="<%= product._id %>"
+                  ><i class="bi bi-heart"></i
+                ></a>
+                <% } %>
               </div>
-              <!-- change herereeeeeeeeee -->
-              <a href="/productDetails/<%= product._id %>">
-                <img src="/ProductImages/<%= product.images[0] %>" class="card-img-top" alt="...">
-              </a>
+
+              <a href="javascript:;"><i class="bi bi-basket3"></i></a>
+              <a
+                href="javascript:;"
+                data-bs-toggle="modal"
+                data-bs-target="#QuickViewModal"
+                ><i class="bi bi-zoom-in"></i
+              ></a>
             </div>
+            <!-- change herereeeeeeeeee -->
+            <a href="/productDetails/<%= product._id %>">
+              <img
+                src="/ProductImages/<%= product.images[0] %>"
+                class="card-img-top"
+                alt="..."
+              />
+            </a>
+          </div>
+          <div class="card-body">
+            <div class="product-info text-center">
+              <h6 class="mb-1 fw-bold product-name"><%= product.name %></h6>
+
+              <p class="mb-0 h6 fw-bold product-price">₹<%= product.price %></p>
+            </div>
+          </div>
+        </div>
+
+        <% } %> <% }); %>
+      </div>
+    </div>
+  </section>
+  <!--end Featured Products slider-->
+
+  <!-- category starts from here -->
+
+  <!--start cartegory slider-->
+  <section class="cartegory-slider section-padding bg-section-2">
+    <div class="container">
+      <div class="text-center pb-3">
+        <h3 class="mb-0 h3 fw-bold">Top Categories</h3>
+      </div>
+      <div class="cartegory-box">
+        <% categories.forEach(category => { %> <% if (!category.isDeleted) { %>
+        <a disabled>
+          <div class="card">
             <div class="card-body">
-              <div class="product-info text-center">
-                <h6 class="mb-1 fw-bold product-name"><%= product.name %></h6>
-              
-                <p class="mb-0 h6 fw-bold product-price">₹<%= product.price %></p>
+              <div class="overflow-hidden">
+                <img
+                  src="/categoryUploads/<%= category.category_image %>"
+                  class="card-img-top rounded-0"
+                  alt="..."
+                />
+              </div>
+              <div class="text-center">
+                <h5 class="mb-1 cartegory-name mt-3 fw-bold"></h5>
+                <h6 class="mb-0 product-number fw-bold">
+                  <%= category.category_name %>
+                </h6>
               </div>
             </div>
           </div>
-
-
-
-          
-   
-          <% }); %>
-        </div>
-       
+        </a>
+        <% } %> <% }); %>
       </div>
-    </section>
-    <!--end Featured Products slider-->
-
-
-   
-
-
-    
-
-
-
-    <!--start Brands-->
-    <!-- <section class="section-padding">
-      <div class="container">
-        <div class="text-center pb-3">
-          <h3 class="mb-0 h3 fw-bold">Shop By Brands</h3>
-          <p class="mb-0 text-capitalize">Select your favorite brands and purchase</p>
-        </div>
-        <div class="brands">
-          <div class="row row-cols-2 row-cols-lg-5 g-4">
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="javascript:;">
-                    <img src="/images/brands/01.webp" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="javascript:;">
-                    <img src="/images/brands/02.webp" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="javascript:;">
-                    <img src="/images/brands/03.webp" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="javascript:;">
-                    <img src="/images/brands/04.webp" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="javascript:;">
-                    <img src="/images/brands/05.webp" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="javascript:;">
-                    <img src="/images/brands/06.webp" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="javascript:;">
-                    <img src="/images/brands/07.webp" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="javascript:;">
-                    <img src="/images/brands/08.webp" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="javascript:;">
-                    <img src="/images/brands/09.webp" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="p-3 border rounded brand-box">
-                <div class="d-flex align-items-center">
-                  <a href="javascript:;">
-                    <img src="/images/brands/10.webp" class="img-fluid" alt="">
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-         
-        </div>
-      </div>
-    </section> -->
-    <!--end Brands-->
-
-
-    <!-- category starts from here -->
-
-    <!--start cartegory slider-->
-    <section class="cartegory-slider section-padding bg-section-2">
-      <div class="container">
-        
-        <div class="text-center pb-3">
-          <h3 class="mb-0 h3 fw-bold">Top Categories</h3>
-         
-        </div>
-        <div class="cartegory-box">
-          <% categories.forEach(category => { %>
-          <a  disabled>
-            <div class="card">
-              <div class="card-body">
-                <div class="overflow-hidden">
-                  <img src="/categoryUploads/<%= category.category_image %>" class="card-img-top rounded-0 " alt="...">
-                </div>
-                <div class="text-center">
-                  <h5 class="mb-1 cartegory-name mt-3 fw-bold"></h5>
-                  <h6 class="mb-0 product-number fw-bold"><%= category.category_name %></h6>
-                </div>
-              </div>
-            </div>
-           
-          </a>
-          <% }); %>
-          <!-- <a href="shop-grid-type-4.html">
-            <div class="card">
-              <div class="card-body">
-                <div class="overflow-hidden">
-                  <img src="/images/categories/02.webp" class="card-img-top rounded-0" alt="...">
-                </div>
-                <div class="text-center">
-                  <h5 class="mb-1 cartegory-name mt-3 fw-bold">Heels</h5>
-                  <h6 class="mb-0 product-number fw-bold">169 Products</h6>
-                </div>
-              </div>
-            </div>
-          </a> -->
-          <!-- <a href="shop-grid-type-4.html">
-            <div class="card">
-              <div class="card-body">
-                <div class="overflow-hidden">
-                  <img src="/images/categories/03.webp" class="card-img-top rounded-0" alt="...">
-                </div>
-                <div class="text-center">
-                  <h5 class="mb-1 cartegory-name mt-3 fw-bold">Lehenga</h5>
-                  <h6 class="mb-0 product-number fw-bold">589 Products</h6>
-                </div>
-              </div>
-            </div>
-          </a> -->
-          <!-- <a href="shop-grid-type-4.html">
-            <div class="card">
-              <div class="card-body">
-                <div class="overflow-hidden">
-                  <img src="/images/categories/04.webp" class="card-img-top rounded-0" alt="...">
-                </div>
-                <div class="text-center">
-                  <h5 class="mb-1 cartegory-name mt-3 fw-bold">Plazzos</h5>
-                  <h6 class="mb-0 product-number fw-bold">278 Products</h6>
-                </div>
-              </div>
-            </div>
-          </a> -->
-          <!-- <a href="shop-grid-type-4.html">
-            <div class="card">
-              <div class="card-body">
-                <div class="overflow-hidden">
-                  <img src="/images/categories/05.webp" class="card-img-top rounded-0" alt="...">
-                </div>
-                <div class="text-center">
-                  <h5 class="mb-1 cartegory-name mt-3 fw-bold">Makeup</h5>
-                  <h6 class="mb-0 product-number fw-bold">985 Products</h6>
-                </div>
-              </div>
-            </div>
-          </a> -->
-          <!-- <a href="shop-grid-type-4.html">
-            <div class="card">
-              <div class="card-body">
-                <div class="overflow-hidden">
-                  <img src="/images/categories/06.webp" class="card-img-top rounded-0" alt="...">
-                </div>
-                <div class="text-center">
-                  <h5 class="mb-1 cartegory-name mt-3 fw-bold">Shoes</h5>
-                  <h6 class="mb-0 product-number fw-bold">489 Products</h6>
-                </div>
-              </div>
-            </div>
-          </a> -->
-        </div>
-       
-      </div>
-    </section>
-    <!--end cartegory slider-->
-
-
-  
-
-
-   
-
-
+    </div>
+  </section>
+  <!--end cartegory slider-->
 
   <!--start footer-->
   <section class="footer-section bg-section-2 section-padding">
     <div class="container">
-       <div class="row row-cols-1 row-cols-lg-4 g-4">
+      <div class="row row-cols-1 row-cols-lg-4 g-4">
         <div class="col">
           <div class="footer-widget-6">
-            <img src="assets/images/logo.webp" class="logo-img mb-3" alt="">
+            <img src="assets/images/logo.webp" class="logo-img mb-3" alt="" />
             <h5 class="mb-3 fw-bold">About Us</h5>
-             <p class="mb-2">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+            <p class="mb-2">
+              Gentlemen, get ready to showcase your cool personality with our
+              range of men’s wear. Wear your heart on your sleeve or go
+              sleeveless with our T-Shirts. Kill the cold with our sweatshirts
+              or make your cool moves with our jeans. Lee brings a wide range of
+              men’s clothing: men’s T-Shirts, men’s shirts, men’s winter wear
+              and men’s jeans. Enjoy online shopping for men. Flaunt your charm
+              with our men’s clothing. Put on Funky and step into the creator’s
+              party artfully!
+            </p>
+          </div>
+        </div>
 
-             <a class="link-dark" href="javascript:;">Read More</a>
-          </div>
-        </div>
-        <div class="col">
-          <div class="footer-widget-7">
-            <h5 class="mb-3 fw-bold">Explore</h5>
-             <ul class="widget-link list-unstyled">
-               <li><a href="javascript:;">Fashion</a></li>
-               <li><a href="javascript:;">Women</a></li>
-               <li><a href="javascript:;">Furniture</a></li>
-               <li><a href="javascript:;">Shoes</a></li>
-               <li><a href="javascript:;">Topwear</a></li>
-               <li><a href="javascript:;">Brands</a></li>
-               <li><a href="javascript:;">Kids</a></li>
-             </ul>
-          </div>
-        </div>
-        <div class="col">
-          <div class="footer-widget-8">
-            <h5 class="mb-3 fw-bold">Company</h5>
-             <ul class="widget-link list-unstyled">
-               <li><a href="javascript:;">About Us</a></li>
-               <li><a href="javascript:;">Contact Us</a></li>
-               <li><a href="javascript:;">FAQ</a></li>
-               <li><a href="javascript:;">Privacy</a></li>
-               <li><a href="javascript:;">Terms</a></li>
-               <li><a href="javascript:;">Complaints</a></li>
-             </ul>
-          </div>
-        </div>
         <div class="col">
           <div class="footer-widget-9">
             <h5 class="mb-3 fw-bold">Follow Us</h5>
-             <div class="social-link d-flex align-items-center gap-2">
-               <a href="javascript:;"><i class="bi bi-facebook"></i></a>
-               <a href="javascript:;"><i class="bi bi-twitter"></i></a>
-               <a href="javascript:;"><i class="bi bi-linkedin"></i></a>
-               <a href="javascript:;"><i class="bi bi-youtube"></i></a>
-               <a href="javascript:;"><i class="bi bi-instagram"></i></a>
-             </div>
-             <div class="mb-3 mt-3">
+            <div class="social-link d-flex align-items-center gap-2">
+              <a href="javascript:;"><i class="bi bi-facebook"></i></a>
+              <a href="javascript:;"><i class="bi bi-twitter"></i></a>
+              <a href="javascript:;"><i class="bi bi-linkedin"></i></a>
+              <a href="javascript:;"><i class="bi bi-youtube"></i></a>
+              <a href="javascript:;"><i class="bi bi-instagram"></i></a>
+            </div>
+            <div class="mb-3 mt-3">
               <h5 class="mb-0 fw-bold">Support</h5>
-              <p class="mb-0 text-muted">support@example.com</p>
-             </div>
-             <div class="">
-              <h5 class="mb-0 fw-bold">Toll Free</h5>
-              <p class="mb-0 text-muted">1800- 8xx 2xx</p>
-             </div>
+              <p class="mb-0 text-muted">funky@gmail.com</p>
+            </div>
           </div>
         </div>
-       </div><!--end row-->
-       <div class="my-5"></div>
-      
-
+      </div>
+      <!--end row-->
+      <div class="my-5"></div>
     </div>
   </section>
   <!--end footer-->
 
-  <footer class="footer-strip text-center py-3 bg-section-2 border-top positon-absolute bottom-0">
-    <p class="mb-0 text-muted">© 2022. www.example.com | All rights reserved.</p>
+  <footer
+    class="footer-strip text-center py-3 bg-section-2 border-top positon-absolute bottom-0"
+  >
+    <p class="mb-0 text-muted">© www.funky.com | All rights reserved.</p>
   </footer>
-
-
-  <!--start cart-->
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasRight"
-    aria-labelledby="offcanvasRightLabel">
-    <div class="offcanvas-header bg-section-2">
-      <h5 class="mb-0 fw-bold" id="offcanvasRightLabel">8 items in the cart</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <div class="cart-list">
-
-        <div class="d-flex align-items-center gap-3">
-          <div class="bottom-product-img">
-            <a href="product-details.html">
-              <img src="assets/images/new-arrival/01.webp" width="60" alt="">
-            </a>
-          </div>
-          <div class="">
-            <h6 class="mb-0 fw-light mb-1">Product Name</h6>
-            <p class="mb-0"><strong>1 X $59.00</strong>
-            </p>
-          </div>
-          <div class="ms-auto fs-5">
-            <a href="javascript:" class="link-dark"><i class="bi bi-trash"></i></a>
-          </div>
-        </div>
-        <hr>
-        <div class="d-flex align-items-center gap-3">
-          <div class="bottom-product-img">
-            <a href="product-details.html">
-              <img src="assets/images/new-arrival/02.webp" width="60" alt="">
-            </a>
-          </div>
-          <div class="">
-            <h6 class="mb-0 fw-light mb-1">Product Name</h6>
-            <p class="mb-0"><strong>1 X $59.00</strong>
-            </p>
-          </div>
-          <div class="ms-auto fs-5">
-            <a href="javascript:" class="link-dark"><i class="bi bi-trash"></i></a>
-          </div>
-        </div>
-        <hr>
-        <div class="d-flex align-items-center gap-3">
-          <div class="bottom-product-img">
-            <a href="product-details.html">
-              <img src="assets/images/new-arrival/03.webp" width="60" alt="">
-            </a>
-          </div>
-          <div class="">
-            <h6 class="mb-0 fw-light mb-1">Product Name</h6>
-            <p class="mb-0"><strong>1 X $59.00</strong>
-            </p>
-          </div>
-          <div class="ms-auto fs-5">
-            <a href="javascript:" class="link-dark"><i class="bi bi-trash"></i></a>
-          </div>
-        </div>
-        <hr>
-        <div class="d-flex align-items-center gap-3">
-          <div class="bottom-product-img">
-            <a href="product-details.html">
-              <img src="assets/images/new-arrival/04.webp" width="60" alt="">
-            </a>
-          </div>
-          <div class="">
-            <h6 class="mb-0 fw-light mb-1">Product Name</h6>
-            <p class="mb-0"><strong>1 X $59.00</strong>
-            </p>
-          </div>
-          <div class="ms-auto fs-5">
-            <a href="javascript:" class="link-dark"><i class="bi bi-trash"></i></a>
-          </div>
-        </div>
-        <hr>
-        <div class="d-flex align-items-center gap-3">
-          <div class="bottom-product-img">
-            <a href="product-details.html">
-              <img src="assets/images/new-arrival/05.webp" width="60" alt="">
-            </a>
-          </div>
-          <div class="">
-            <h6 class="mb-0 fw-light mb-1">Product Name</h6>
-            <p class="mb-0"><strong>1 X $59.00</strong>
-            </p>
-          </div>
-          <div class="ms-auto fs-5">
-            <a href="javascript:" class="link-dark"><i class="bi bi-trash"></i></a>
-          </div>
-        </div>
-        <hr>
-        <div class="d-flex align-items-center gap-3">
-          <div class="bottom-product-img">
-            <a href="product-details.html">
-              <img src="assets/images/new-arrival/06.webp" width="60" alt="">
-            </a>
-          </div>
-          <div class="">
-            <h6 class="mb-0 fw-light mb-1">Product Name</h6>
-            <p class="mb-0"><strong>1 X $59.00</strong>
-            </p>
-          </div>
-          <div class="ms-auto fs-5">
-            <a href="javascript:" class="link-dark"><i class="bi bi-trash"></i></a>
-          </div>
-        </div>
-        <hr>
-        <div class="d-flex align-items-center gap-3">
-          <div class="bottom-product-img">
-            <a href="product-details.html">
-              <img src="assets/images/new-arrival/07.webp" width="60" alt="">
-            </a>
-          </div>
-          <div class="">
-            <h6 class="mb-0 fw-light mb-1">Product Name</h6>
-            <p class="mb-0"><strong>1 X $59.00</strong>
-            </p>
-          </div>
-          <div class="ms-auto fs-5">
-            <a href="javascript:" class="link-dark"><i class="bi bi-trash"></i></a>
-          </div>
-        </div>
-        <hr>
-        <div class="d-flex align-items-center gap-3">
-          <div class="bottom-product-img">
-            <a href="product-details.html">
-              <img src="/images/new-arrival/08.webp" width="60" alt="">
-            </a>
-          </div>
-          <div class="">
-            <h6 class="mb-0 fw-light mb-1">Product Name</h6>
-            <p class="mb-0"><strong>1 X $59.00</strong>
-            </p>
-          </div>
-          <div class="ms-auto fs-5">
-            <a href="javascript:" class="link-dark"><i class="bi bi-trash"></i></a>
-          </div>
-        </div>
-        <hr>
-        <div class="d-flex align-items-center gap-3">
-          <div class="bottom-product-img">
-            <a href="product-details.html">
-              <img src="/images/new-arrival/09.webp" width="60" alt="">
-            </a>
-          </div>
-          <div class="">
-            <h6 class="mb-0 fw-light mb-1">Product Name</h6>
-            <p class="mb-0"><strong>1 X $59.00</strong>
-            </p>
-          </div>
-          <div class="ms-auto fs-5">
-            <a href="javascript:" class="link-dark"><i class="bi bi-trash"></i></a>
-          </div>
-        </div>
-        <hr>
-        <div class="d-flex align-items-center gap-3">
-          <div class="bottom-product-img">
-            <a href="product-details.html">
-              <img src="/images/new-arrival/10.webp" width="60" alt="">
-            </a>
-          </div>
-          <div class="">
-            <h6 class="mb-0 fw-light mb-1">Product Name</h6>
-            <p class="mb-0"><strong>1 X $59.00</strong>
-            </p>
-          </div>
-          <div class="ms-auto fs-5">
-            <a href="javascript:" class="link-dark"><i class="bi bi-trash"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="offcanvas-footer p-3 border-top">
-      <div class="d-grid">
-        <button type="button" class="btn btn-lg btn-dark btn-ecomm px-5 py-3">Checkout</button>
-      </div>
-    </div>
-
-  </div>
-  <!--end cat-->
-
 
   <!--start quick view-->
 
   <!-- Modal -->
-  <div class="modal fade" id="QuickViewModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content rounded-0">
 
-        <div class="modal-body">
-          <div class="row g-3">
-            <div class="col-12 col-xl-6">
-
-              <div class="wrap-modal-slider">
-
-                <div class="slider-for">
-                  <div>
-                    <img src="/images/product-images/01.jpg" alt="" class="img-fluid">
-                  </div>
-                  <div>
-                    <img src="/images/product-images/02.jpg" alt="" class="img-fluid">
-                  </div>
-                  <div>
-                    <img src="/images/product-images/03.jpg" alt="" class="img-fluid">
-                  </div>
-                  <div>
-                    <img src="/images/product-images/04.jpg" alt="" class="img-fluid">
-                  </div>
-                </div>
-
-                <div class="slider-nav mt-3">
-                  <div>
-                    <img src="/images/product-images/01.jpg" alt="" class="img-fluid">
-                  </div>
-                  <div>
-                    <img src="/images/product-images/02.jpg" alt="" class="img-fluid">
-                  </div>
-                  <div>
-                    <img src="/images/product-images/03.jpg" alt="" class="img-fluid">
-                  </div>
-                  <div>
-                    <img src="/images/product-images/04.jpg" alt="" class="img-fluid">
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-            <div class="col-12 col-xl-6">
-              <div class="product-info">
-                <h4 class="product-title fw-bold mb-1">Check Pink Kurta</h4>
-                <p class="mb-0">Women Pink & Off-White Printed Kurta with Palazzos</p>
-                <div class="product-rating">
-                  <div class="hstack gap-2 border p-1 mt-3 width-content">
-                    <div><span class="rating-number">4.8</span><i class="bi bi-star-fill ms-1 text-success"></i></div>
-                    <div class="vr"></div>
-                    <div>162 Ratings</div>
-                  </div>
-                </div>
-                <hr>
-                <div class="product-price d-flex align-items-center gap-3">
-                  <div class="h4 fw-bold">$458</div>
-                  <div class="h5 fw-light text-muted text-decoration-line-through">$2089</div>
-                  <div class="h4 fw-bold text-danger">(70% off)</div>
-                </div>
-                <p class="fw-bold mb-0 mt-1 text-success">inclusive of all taxes</p>
-
-                <div class="more-colors mt-3">
-                  <h6 class="fw-bold mb-3">More Colors</h6>
-                  <div class="d-flex align-items-center gap-2 flex-wrap">
-                    <div class="color-box bg-red"></div>
-                    <div class="color-box bg-primary"></div>
-                    <div class="color-box bg-yellow"></div>
-                    <div class="color-box bg-purple"></div>
-                    <div class="color-box bg-green"></div>
-                  </div>
-                </div>
-
-                <div class="size-chart mt-3">
-                  <h6 class="fw-bold mb-3">Select Size</h6>
-                  <div class="d-flex align-items-center gap-2 flex-wrap">
-                    <div class="">
-                      <button type="button" class="rounded-0">XS</button>
-                    </div>
-                    <div class="">
-                      <button type="button" class="rounded-0">S</button>
-                    </div>
-                    <div class="">
-                      <button type="button" class="rounded-0">M</button>
-                    </div>
-                    <div class="">
-                      <button type="button" class="rounded-0">L</button>
-                    </div>
-                    <div class="">
-                      <button type="button" class="rounded-0">XL</button>
-                    </div>
-                    <div class="">
-                      <button type="button" class="rounded-0">XXL</button>
-                    </div>
-                  </div>
-                </div>
-                <div class="cart-buttons mt-3">
-                  <div class="buttons d-flex flex-column gap-3 mt-4">
-                    <a href="javascript:;" class="btn btn-lg btn-dark btn-ecomm px-5 py-3 flex-grow-1"><i
-                        class="bi bi-basket2 me-2"></i>Add to Bag</a>
-                    <a href="javascript:;" class="btn btn-lg btn-outline-dark btn-ecomm px-5 py-3"><i
-                        class="bi bi-suit-heart me-2"></i>Wishlist</a>
-                  </div>
-                </div>
-                <hr class="my-3">
-                <div class="product-share">
-                  <h6 class="fw-bold mb-3">Share This Product</h6>
-                  <div class="d-flex align-items-center gap-2 flex-wrap">
-                    <div class="">
-                      <button type="button" class="btn-social bg-twitter"><i class="bi bi-twitter"></i></button>
-                    </div>
-                    <div class="">
-                      <button type="button" class="btn-social bg-facebook"><i class="bi bi-facebook"></i></button>
-                    </div>
-                    <div class="">
-                      <button type="button" class="btn-social bg-linkden"><i class="bi bi-linkedin"></i></button>
-                    </div>
-                    <div class="">
-                      <button type="button" class="btn-social bg-youtube"><i class="bi bi-youtube"></i></button>
-                    </div>
-                    <div class="">
-                      <button type="button" class="btn-social bg-pinterest"><i class="bi bi-pinterest"></i></button>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-          <!--end row-->
-        </div>
-
-      </div>
-    </div>
-  </div>
   <!--end quick view-->
-
 
   <!--Start Back To Top Button-->
   <a href="javaScript:;" class="back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -775,47 +237,48 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener("DOMContentLoaded", function () {
       // Assuming you have initialized toastMixin somewhere else in your code
-      
+
       // Add event listener to the button with class .second
-      document.querySelector(".second").addEventListener('click', function(){
+      document.querySelector(".second").addEventListener("click", function () {
         // Trigger the toast notification
         toastMixin.fire({
           animation: true,
-          title: 'Signed in Successfully'
+          title: "Signed in Successfully",
         });
       });
     });
-    $(document).ready(function() {
-      $('.add-to-wishlist, .remove-from-wishlist').on('click', function(e) {
+    $(document).ready(function () {
+      $(".add-to-wishlist, .remove-from-wishlist").on("click", function (e) {
         e.preventDefault();
-        var productId = $(this).data('product-id');
-        var isRemoveAction = $(this).hasClass('remove-from-wishlist');
-        var url = isRemoveAction ? '/remove-wishlist/' + productId : '/addwish/' + productId;
-  
+        var productId = $(this).data("product-id");
+        var isRemoveAction = $(this).hasClass("remove-from-wishlist");
+        var url = isRemoveAction
+          ? "/remove-wishlist/" + productId
+          : "/addwish/" + productId;
+
         $.ajax({
-          type: 'GET', // Use POST for changing server-side state
+          type: "GET", // Use POST for changing server-side state
           url: url,
-          success: function(response) {
+          success: function (response) {
             // Update UI based on response
             if (isRemoveAction) {
               // Product removed from wishlist
-              $(e.target).removeClass('in-wishlist');
+              $(e.target).removeClass("in-wishlist");
             } else {
               // Product added to wishlist
-              $(e.target).addClass('in-wishlist');
+              $(e.target).addClass("in-wishlist");
             }
           },
-          error: function(xhr, status, error) {
+          error: function (xhr, status, error) {
             console.error(error);
             // Handle errors
-          }
+          },
         });
       });
     });
   </script>
-
 
   <!-- JavaScript files -->
   <script src="/js/bootstrap.bundle.min.js"></script>
@@ -825,8 +288,5 @@
   <script src="/js/index.js"></script>
   <script src="/js/loader.js"></script>
 
-
-  
-
-<%- include('../layouts/footer.ejs') %>
-
+  <%- include('../layouts/footer.ejs') %>
+</div>

@@ -43,8 +43,7 @@
             <div class="card card-product-grid border border-dark" style="height: 300px;">
                 <a href="#" class="img-wrap mt-2"> <img src="/bannerImages/<%= banner.banner_image %>"  /> </a>
                 <p class="text-dark mt-4 p-1">Banner Name: <%= banner.bname %></p>
-                <p class="text-dark p-1">Starting Date: <%= banner.starting.toLocaleDateString() %></p>
-                <p class="text-dark p-1">Expiry: <%= banner.ending.toLocaleDateString() %></p>
+               
                 <div class="info-wrap">
                     <div class="dropdown float-end">
                         
@@ -54,7 +53,13 @@
                     
                     <!-- price-wrap.// -->
                 </div>
+               
+                
+                <button class="btn btn-danger text delete-link" data-banner-id="<%= banner._id %>" onclick="confirmDelete('<%= banner._id %>',event)">Delete</button>
+
+
             </div>
+            
             <!-- card-product  end// -->
         </div>
         <% }); %>
@@ -77,38 +82,65 @@
     <!-- row.// -->
 
 
-    <!-- <div class="pagination-area mt-15 mb-50">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-start">
-                <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                <li class="page-item"><a class="page-link" href="#">02</a></li>
-                <li class="page-item"><a class="page-link" href="#">03</a></li>
-                <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                <li class="page-item"><a class="page-link" href="#">16</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a>
-                </li>
-            </ul>
-        </nav>
-    </div> -->
+  
 
 </section>
 
 
 <script>
-    function confirmDelete(categoryId, event) {
-        var confirmation = confirm("Are you sure you want to delete?");
 
-        if (!confirmation) {
-            // If the user clicks "Cancel", prevent the default anchor tag behavior
-            event.preventDefault();
-            console.log('Deletion canceled');
-        }
-    }
 </script>
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+// function confirmDelete(categoryId, event) {
+//         var confirmation = confirm("Are you sure you want to delete?");
+
+//         if (!confirmation) {
+//             event.preventDefault();
+//             // If the user clicks "Cancel", return false to prevent the default button behavior
+//             console.log('Deletion canceled');
+//             return false;
+//         }
+//     }
+
+
+ document.addEventListener('DOMContentLoaded', function() {
+  // Select all delete buttons
+  const deleteButtons = document.querySelectorAll('.delete-link');
+
+  // Add click event listener to each delete button
+  deleteButtons.forEach(function(button) {
+    button.addEventListener('click', function(event) {
+      event.preventDefault(); // Prevent default button behavior
+
+      // Get the banner ID from data attribute
+      const bannerId = this.getAttribute('data-banner-id');
+      
+      // Send a DELETE request to delete the banner
+      axios.delete(`/admin/deleteban/${bannerId}`)
+        .then(function(response) {
+          // Handle successful response (if needed)
+          console.log('Banner deleted successfully:', response.data);
+
+          const deletedBanner = document.querySelector(`[data-banner-id="${bannerId}"]`).closest('.col-xl-3');
+                    deletedBanner.remove();
+       
+        //   window.location.href = '/admin/banner'; 
+        })
+        .catch(function(error) {
+          // Handle error (if needed)
+          console.error('Error deleting banner:', error);
+        });
+    });
+  });
+});
+
+  </script>
+  
 
 
 

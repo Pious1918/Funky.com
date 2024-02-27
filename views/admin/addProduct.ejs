@@ -170,8 +170,8 @@
 
         // Validate Price
         var price = document.forms["mypro"]["price"].value.trim();
-        if (price === "" || isNaN(price) || parseFloat(price) < 0) {
-            document.getElementById("priceerr").innerText="Price must be a positive number"
+        if (price === "" || isNaN(price) || parseFloat(price) <= 0) {
+            document.getElementById("priceerr").innerText="Price must be a positive number and greater than 0"
             // alert("Price must be a positive number");
             return false;
         }

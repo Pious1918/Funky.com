@@ -3,11 +3,11 @@
 <section class="p-5">
 
     <div class="container">
-
+      <h1>Product Offer</h1>
         <div class="row">
 
             <div class="col-12 col-md-12 col-lg-12">
-                <form action="/admin/addProoffer" method="post">
+                <form action="/admin/addProoffer" method="post" onsubmit="return validateForm()" id="myform">
 
                   <div class="mb-3">
 
@@ -31,6 +31,7 @@
                     <div class="mb-3">
                       <label for="exampleInputPassword1" class="form-label text-dark">Discount Percentage</label>
                       <input type="text" name="discount" class="form-control border border-success" id="exampleInputPassword1">
+                      <small id="discountError" class="text-danger"></small>
                     </div>
                    
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -89,7 +90,33 @@
 </section>
 
 
+<script>
 
+function confirmDelete(couponId, event) {
+        var confirmation = confirm("Are you sure you want to delete?");
+
+        if (!confirmation) {
+            event.preventDefault();
+            // If the user clicks "Cancel", return false to prevent the default button behavior
+            console.log('Deletion canceled');
+            return false;
+        }
+    }
+
+
+  function validateForm() {
+   
+
+      // Validate Discount
+      var discount = document.forms["myform"]["discount"].value.trim();
+      if (discount === "" || isNaN(discount) || parseFloat(discount) < 20 || parseFloat(discount) > 80) {
+          document.getElementById("discountError").innerText = "Discount must be a number between 20 and 80";
+          return false;
+      }
+
+
+    }
+</script>
 
 
 

@@ -31,15 +31,7 @@
 <body>
 
 
-     <!--page loader-->
-     <!-- <div class="loader-wrapper">
-      <div class="d-flex justify-content-center align-items-center position-absolute top-50 start-50 translate-middle">
-        <div class="spinner-border text-dark" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    </div> -->
-   <!--end loader-->
+ 
 
   <!--start top header-->
   <header class="top-header">
@@ -63,8 +55,8 @@
             <li class="nav-item">
               <a class="nav-link" href="/">Home</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="tv-shows.html"
+            <li class="nav-item dropdown ">
+              <a class="nav-link dropdown-toggle dropdown-toggle-nocaret disabled" href="tv-shows.html"
                 data-bs-toggle="dropdown">
                 Categories
               </a>
@@ -77,11 +69,15 @@
                   
                     <ul class="list-unstyled">
                       <% if(category.length > 0) {
+                        
                         category.forEach((ele) => {%>
+                          <% if (!ele.isDeleted) { %>
                       <li><a href="javascript:;"> <%= ele.category_name %> </a>
-
+                        <% } %>
                         <% }) } %>
                       </li>
+
+                      
                     </ul>
            
                   </div>
@@ -102,7 +98,7 @@
 
             <li class="nav-item">
 
-                <a class="nav-link" href="/filter"> Filter </a>
+                <a class="nav-link" href="/filter"> Shop </a>
 
             </li>
 
@@ -136,18 +132,12 @@
 
 
             <% if (user){ %>
-            <li class="nav-item">
+ 
 
-              <a class="nav-link"> Welcome, <%= user.name %></a>
-            
-            </li>
+      
 
             <li class="nav-item">
-              <a class="nav-link" href="/logout">Logout</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="/userdashboard">Dashboard</a>
+              <a class="nav-link" href="/userdashboard">Settings</a>
             </li>
             <% }else{ %>
             <li class="nav-item">
@@ -188,13 +178,7 @@
         </div>
       </div>
       <ul class="navbar-nav secondary-menu flex-row">
-        <li class="nav-item">
-          <a class="nav-link dark-mode-icon" href="javascript:;">
-            <div class="mode-icon">
-              <i class="bi bi-moon"></i>
-            </div>
-          </a>
-        </li>
+      
 
 
         <% if (user){ %>
@@ -210,9 +194,7 @@
           </a>
         </li> 
 
-        <li class="nav-item">
-          <a class="nav-link" href=""><i class="bi bi-person-circle"></i></a>
-        </li> 
+    
         <% }else{ %>
 
           <li class="nav-item">

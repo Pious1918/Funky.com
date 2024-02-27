@@ -366,27 +366,86 @@ const typedEmail = async(req,res)=>{
 
   try {
     
-    const {email} = req.body.email
-
-    const userData = await userModel.findOne({email:email})
-    console.log("user",email)
-
-    res.render("otp")
+    gemail = req.body.email
+    const userData = await userModel.findOne({email:gemail})
+    console.log("user",gemail)
 
 
+    if(userData){
+      
     otp = otpgenerator();
-    sendOtp(email, otp);
+    sendOtp(gemail, otp);
 
     const newotp = new Otpmodel({
-      email: email,
+      email: gemail,
       otp: otp,
     })
     await newotp.save()
-    res.render("otp");
+    res.render("newPassOtp");
 
+    }else{
+      
+      res.render("enterEmail",{message:"wrong email"});
+    }
 
   } catch (error) {
     console.log("error from typedEmail",error)
+  }
+}
+
+// to type password
+
+const newPass = async(req,res)=>{
+
+  try {
+
+    const enterotp =req.body.otp;
+    if(enterotp==otp){
+    
+    res.render("newPass")
+    }else{
+
+      res.render("newPassOtp",{message:"wrong otp"});
+    }
+
+  } catch (error) {
+    console.log("error from newPasss",error)
+  }
+}
+
+
+const confiPass = async(req,res)=>{
+
+  try {
+
+    const {newpass,confpass} = req.body
+
+    if(newpass===confpass){
+
+      const userData = await userModel.findOne({email:gemail})
+
+      if(userData){
+        userData.password = confpass
+        
+        const updatedUser = await userData.save();
+
+        console.log('updateuser:',updatedUser)
+
+        if (updatedUser) {
+          res.json({ success: true, message: 'updated' });
+          
+        } else {
+            res.render('newPassword', { message: "Error updating password" });
+        }
+      }
+
+     
+    }else{
+      console.log("diff pass")
+    }
+    
+  } catch (error) {
+    console.log("error from confiPass",error)
   }
 }
 
@@ -398,11 +457,14 @@ const typedEmail = async(req,res)=>{
 
 
 
-
-
 const userdashLoad = (req, res) => {
+  const currentUser = res.locals.user;
+ 
+
+  const name = currentUser.name
+  console.log(name)
   if (req.cookies["access-token"]) {
-    res.render("dashboard");
+    res.render("dashboard",{name});
   } else {
     res.redirect("/");
   }
@@ -1155,8 +1217,6 @@ if (searchQuery) {
 }
 
 
-
-
 const categories = await categoryFromDb.find();
 const selectedCategoryName = req.query.selected ? categories.find(cat => cat._id.toString() === req.query.selected).category_name : "All";
 res.json({ categories, productDetails, selectedCategories,selectedCategoryName });
@@ -1260,7 +1320,9 @@ module.exports = {
   search,
   referalPage,
   forget,
-  typedEmail
+  typedEmail,
+  newPass,
+  confiPass
 
 
 
