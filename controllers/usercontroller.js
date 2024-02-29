@@ -185,9 +185,9 @@ const resentOtp = async (req, res) => {
 
     if (updatedOtp) {
       sendOtp(gemail, otp);
-      res.render("otp");
+      res.render("otp",{error});
     } else {
-      res.render("otp", { message: "Failed to update OTP. Please try again." });
+      res.render("otp", { error: "Failed to update OTP. Please try again." });
     }
   } catch (error) {
     console.log(error);
