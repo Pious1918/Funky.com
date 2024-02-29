@@ -918,42 +918,94 @@ const passPageLoad = (req,res)=>{
   }
 }
 
-const editPass = async(req,res)=>{
+// const editPass = async(req,res)=>{
 
+//   try {
+//     const currentUser = res.locals.user;
+//     console.log('Current User ID:', currentUser._id);
+//     const userdetails = await userModel.findOne({ _id: currentUser._id });
+
+//     if (userdetails) {
+//       // Update the user details
+
+
+      
+//       if (userdetails.password === req.body.old) {
+
+
+//         console.log("userdetails.password",userdetails.password)
+//         console.log("req.body.old",req.body.old)
+//       await userModel.findOneAndUpdate(
+//         { _id: currentUser._id },
+//         {
+//           $set: {
+//             password: req.body.conew
+          
+//             // Add other fields as needed
+//           },
+//         },
+//         { new: true } // Returns the updated document
+//       );
+//       console.log('Request Body:', req.body);
+//       res.redirect('/profile')
+//       // res.status(200).json({ message: 'User details updated successfully' });
+//     }} else {
+//       res.status(404).json({ error: 'User not found' });
+//     }
+    
+    
+//   } catch (error) {
+//     console.log("error from editPass" , error)
+//   }
+// }
+const editPass = async (req, res) => {
   try {
     const currentUser = res.locals.user;
     console.log('Current User ID:', currentUser._id);
     const userdetails = await userModel.findOne({ _id: currentUser._id });
 
     if (userdetails) {
-      // Update the user details
+      // Check if the old password matches the password stored in the database
+      if (userdetails.password !== req.body.old) {
+        console.log('Typed password does not match the stored password');
+        return res.status(400).json({ error: 'Typed password does not match the stored password' });
+      }
 
-      if (userdetails.password === req.body.old) {
-        console.log("userdetails.password",userdetails.password)
-        console.log("req.body.old",req.body.old)
-      await userModel.findOneAndUpdate(
-        { _id: currentUser._id },
-        {
-          $set: {
-            password: req.body.conew
-          
-            // Add other fields as needed
-          },
-        },
-        { new: true } // Returns the updated document
-      );
-      console.log('Request Body:', req.body);
-      res.redirect('/profile')
-      // res.status(200).json({ message: 'User details updated successfully' });
-    }} else {
+
+      if(req.body.conew==req.body.new){
+  // Update the user details
+  await userModel.findOneAndUpdate(
+    { _id: currentUser._id },
+    {
+      $set: {
+        password: req.body.conew,
+        // Add other fields as needed
+      },
+    },
+    { new: true } // Returns the updated document
+  );
+
+  console.log('Request Body:', req.body);
+  res.redirect('/profile');
+  // res.status(200).json({ message: 'User details updated successfully' });
+
+
+
+      }else{
+        console.log("mismatched passwords")
+        return res.status(400).json({ error: 'Mismatched passwords' });
+      }
+
+    
+    } else {
       res.status(404).json({ error: 'User not found' });
+      
     }
-    
-    
   } catch (error) {
-    console.log("error from editPass" , error)
+    console.log('Error from editPass', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
-}
+};
 
 
 
