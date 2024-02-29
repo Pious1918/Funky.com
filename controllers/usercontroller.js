@@ -999,6 +999,7 @@ const editPass = async (req, res) => {
     
     } else {
       res.status(404).json({ error: 'User not found' });
+    
       
     }
   } catch (error) {
