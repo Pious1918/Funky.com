@@ -11,7 +11,7 @@ const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 const path = require("path");
 const ejs = require("ejs");
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
 
 const razorpay = require("razorpay");
 
@@ -191,30 +191,7 @@ const loadCheckout = async (req, res) => {
         $unwind: "$productDetails", // Unwind the array of product details
       },
     ]);
-    // console.log(userCart)
-
-    // const coupnkart = await couponCartModel.aggregate([
-    //   {
-    //     $match: { user_id: currentUser._id },
-    //   },
-
-    //   {
-    //     $unwind: "$coupons",
-    //   },
-
-    //   {
-    //     $lookup: {
-    //       from: "coupons",
-    //       localField: "coupons.coupon_id",
-    //       foreignField: "_id",
-    //       as: "ordereditems",
-    //     },
-    //   },
-    //   {
-    //     $unwind: "$ordereditems",
-    //   },
-    // ]);
-    // console.log("cokarr",coupnkart)
+  
 
     totalAmount =
       userCart[0].counponPrice > 0

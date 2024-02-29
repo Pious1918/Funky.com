@@ -1,15 +1,6 @@
 <%- include('../layouts/header.ejs') %>
 
-<style>
-  .bi.bi-heart {
-    color: black; /* Change this to your default color */
-  }
 
-  /* Heart icon color when product is in the wishlist */
-  .bi.bi-heart.in-wishlist::before {
-    color: red; /* Change this to your desired color */
-  }
-</style>
 
 <!--start top header-->
 
@@ -87,33 +78,20 @@
               <!-- <a href="javascript:;"><i class="bi bi-heart"></i></a> -->
 
               <div class="icon-wishlist">
-                <% if (wishlist && wishlist.products.some(wishItem =>
-                wishItem.product_id.toString() === product._id.toString())) { %>
-                <!-- Product is in the wishlist, display heart icon in red color -->
-                <a
-                  href="#"
-                  class="remove-from-wishlist"
-                  data-product-id="<%= product._id %>"
-                  ><i class="bi bi-heart in-wishlist"></i
-                ></a>
-                <% } else { %>
-                <!-- Product is not in the wishlist, display default heart icon -->
-                <a
-                  href="#"
-                  class="add-to-wishlist"
-                  data-product-id="<%= product._id %>"
-                  ><i class="bi bi-heart"></i
-                ></a>
-                <% } %>
+            
+                
+           
+              <button type="button" class="btn btn-dark add-to-wishlist" data-product-id="<%= product._id %>" style="padding: 0.5rem;">
+                <i class="bi bi-heart" style="color: black;"></i>
+            </button>
+            
+            
+              
+               
               </div>
 
               <a href="javascript:;"><i class="bi bi-basket3"></i></a>
-              <a
-                href="javascript:;"
-                data-bs-toggle="modal"
-                data-bs-target="#QuickViewModal"
-                ><i class="bi bi-zoom-in"></i
-              ></a>
+            
             </div>
             <!-- change herereeeeeeeeee -->
             <a href="/productDetails/<%= product._id %>">
@@ -234,59 +212,74 @@
   <a href="javaScript:;" class="back-to-top"><i class="bi bi-arrow-up"></i></a>
   <!--End Back To Top Button-->
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Assuming you have initialized toastMixin somewhere else in your code
-
-      // Add event listener to the button with class .second
-      document.querySelector(".second").addEventListener("click", function () {
-        // Trigger the toast notification
-        toastMixin.fire({
-          animation: true,
-          title: "Signed in Successfully",
-        });
-      });
-    });
-    $(document).ready(function () {
-      $(".add-to-wishlist, .remove-from-wishlist").on("click", function (e) {
-        e.preventDefault();
-        var productId = $(this).data("product-id");
-        var isRemoveAction = $(this).hasClass("remove-from-wishlist");
-        var url = isRemoveAction
-          ? "/remove-wishlist/" + productId
-          : "/addwish/" + productId;
-
-        $.ajax({
-          type: "GET", // Use POST for changing server-side state
-          url: url,
-          success: function (response) {
-            // Update UI based on response
-            if (isRemoveAction) {
-              // Product removed from wishlist
-              $(e.target).removeClass("in-wishlist");
-            } else {
-              // Product added to wishlist
-              $(e.target).addClass("in-wishlist");
-            }
-          },
-          error: function (xhr, status, error) {
-            console.error(error);
-            // Handle errors
-          },
-        });
-      });
-    });
-  </script>
+ 
 
   <!-- JavaScript files -->
-  <script src="/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/jquery.min.js"></script>
-  <script src="/plugins/slick/slick.min.js"></script>
-  <script src="/js/main.js"></script>
-  <script src="/js/index.js"></script>
-  <script src="/js/loader.js"></script>
 
-  <%- include('../layouts/footer.ejs') %>
+
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addToWishlistButtons = document.querySelectorAll('.add-to-wishlist');
+
+        addToWishlistButtons.forEach(button => {
+            button.addEventListener('click', async function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                const productId = this.getAttribute('data-product-id');
+                console.log("productId", productId);
+
+                try {
+                    // Send POST request using Axios
+                    const response = await axios.post(`/addwish/${productId}`);
+
+                    // Handle the response
+                    if (response.status === 200) {
+                        console.log('Product added to wishlist');
+                        // Redirect to the desired page after adding the product to the wishlist
+                        // window.location.href = '/';
+
+                        
+                    } else {
+                        // Check the response data for specific error message
+                        const responseData = response.data;
+                        console.log("responseData", responseData);
+                        if (responseData.error === 'Product already in wishlist') {
+                            console.log('Product already in wishlist');
+                            // Display custom message using SweetAlert
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Product already in wishlist',
+                                text: '',
+                            });
+                        } else {
+                            // Display generic error message
+                            console.error('Failed to add product to wishlist');
+                            alert('Failed to add product to wishlist');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error adding product to wishlist:', error);
+                    alert('Error adding product to wishlist');
+                }
+            });
+        });
+    });
+</script>
+
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/plugins/slick/slick.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/index.js"></script>
+<script src="/js/loader.js"></script>
+
+<!-- SweetAlert library -->
+
+
+
+
+<%- include('../layouts/footer.ejs') %>

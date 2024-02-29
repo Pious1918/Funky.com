@@ -47,13 +47,13 @@ const homeLoad = async (req, res) => {
   try {
     const categoryDetails = await categoryFromDb.find()
 
-    console.log('home'+categoryDetails[0].category_image)
+    
 
 
     const productDetails = await productFromDb.find()
 
 
-    console.log("pro details "+productDetails[0].name)
+
 
     const bannerdetails = await bannerModel.find()
     const wishlist = await wishdb.findOne();
@@ -126,7 +126,7 @@ const signup = async (req, res) => {
       otp: otp,
     })
     await newotp.save()
-    res.render("otp");
+    res.render("otp",{error:""});
   } catch (error) {
     console.log(error);
   }
@@ -277,6 +277,13 @@ const verifyotp = async (req, res) => {
       res.render("register", { message: "registration failed" });
     }
   }
+
+  else {
+    // OTP is incorrect, show console log
+    console.log("Incorrect OTP entered");
+    res.render("otp", { error: "Incorrect OTP entered. Please try again." });
+    // You can add further handling here if needed
+}
 };
 
 
@@ -672,6 +679,7 @@ const giveAdd = async (req, res) => {
 const loadEditAdd = async (req, res) => {
   try {
     const currentUser = res.locals.user;
+    console.log("currentUser",currentUser)
     const addressId = req.query.addressId;
 
     const userAddress = await addressModel.findOne({ user_id: currentUser._id });

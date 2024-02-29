@@ -32,7 +32,7 @@ admin_Route.get("/orderlist" , orderList)
 admin_Route.get("/detailopen", detailedOpen)
 
 admin_Route.post('/status', statusChanger)
-// admin_Route.get('/daily', daily)
+
 admin_Route.get('/custom-sales-report', customSalesReport);
 
 admin_Route.get('/coupon', adminCoupon)

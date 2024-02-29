@@ -24,10 +24,7 @@
                    
                   </div>
 
-                    <!-- <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label text-dark">Product Name</label>
-                      <input type="email" class="form-control border border-success" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    </div> -->
+                 
 
                     <div class="mb-3">
                       <label for="exampleInputPassword1" class="form-label text-dark">Discount Percentage</label>
@@ -58,10 +55,7 @@
                           <th scope="col">Category Name</th>
                           <th scope="col">Offer Percentage</th>
                           <th scope="col">Action</th>
-                          <!-- <th scope="col">Total</th> -->
-                          <!-- <th scope="col">Status</th> -->
-                          <!-- <th scope="col">Date</th> -->
-                          <!-- <th scope="col" class="text-end">Action</th> -->
+                         
                       </tr>
                      
                   </thead>
@@ -71,14 +65,8 @@
                           <!-- <td>0901</td> -->
                           <td><b><%= categories.categoryDetails.category_name%></b></td>
                           <td><%= categories.categoryOffer%>%</td>
-                          <td><a class=" btn btn-danger text" href="/admin/deleteCatOffer?id=<%= categories._id %>" onclick="confirmDelete('<%= categories._id %>' , event)">Delete</a></td>
-                          <!-- <td>$9.00</td> -->
-                          <!-- <td><span class="badge rounded-pill alert-warning">Pending</span></td> -->
-                          <!-- <td>03.12.2020</td> -->
-                          <!-- <td class="text-end">
-                              <a href="#" class="btn btn-md rounded font-sm">Detail</a>
-                          
-                          </td> -->
+                          <td><a class=" btn btn-danger text" href="/admin/deleteCatOffer?id=<%= categories._id %>" onclick="confirmDelete('<%= categories._id %>')">Delete</a></td>
+                   
                       </tr>
                       <% }); %> 
                     
@@ -94,18 +82,50 @@
   </div>
 </section>
 
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+  function confirmDelete(couponId) {
+      // Using SweetAlert instead of confirm
+      Swal.fire({
+          title: 'Are you sure want to delete the offer?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              // If the user confirms, proceed with deletion
+              window.location.href = "/admin/deleteCatOffer?id=" + couponId;
+          }
+      });
+
+      // Prevent the default link behavior
+      event.preventDefault();
+  }
+</script>
+
+
+
 <script>
 
-function confirmDelete(couponId, event) {
-        var confirmation = confirm("Are you sure you want to delete?");
+// function confirmDelete(couponId, event) {
+//         var confirmation = confirm("Are you sure you want to delete?");
 
-        if (!confirmation) {
-            event.preventDefault();
-            // If the user clicks "Cancel", return false to prevent the default button behavior
-            console.log('Deletion canceled');
-            return false;
-        }
-    }
+//         if (!confirmation) {
+//             event.preventDefault();
+//             // If the user clicks "Cancel", return false to prevent the default button behavior
+//             console.log('Deletion canceled');
+//             return false;
+//         }
+//     }
 
 
   function validateForm() {

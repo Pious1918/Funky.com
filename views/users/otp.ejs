@@ -12,8 +12,13 @@
               <div class="card rounded-0">
                 <div class="card-body p-4">
                   <h4 class="mb-0 fw-bold text-center">OTP Verification</h4>
+
                   <hr>
-                 
+                 <% if (error) { %>
+                                <div class="alert alert-danger" role="alert">
+                                    <%= error %>
+                                </div>
+                            <% } %>
                   
                   <form action="/verify" method="post">
                      <div class="row g-4">
@@ -73,37 +78,6 @@
     <script src="assets/js/loader.js"></script>
  
 
-    <!-- <script>
-
-        // Set the initial timer duration in seconds (300 seconds = 5 minutes)
-  let timerDuration = 300;
-
-function updateTimer() {
-  const minutes = Math.floor(timerDuration / 60);
-  const seconds = timerDuration % 60;
-  document.getElementById('timerText').innerText = `Resend OTP in ${minutes}m ${seconds}s`;
-
-  if (timerDuration > 0) {
-    timerDuration--;
-    setTimeout(updateTimer, 1000);
-  } else {
-    // Enable the resend button after the timer expires
-    document.getElementById('resendBtn').removeAttribute('hidden');
-    document.getElementById('timerContainer').innerHTML = ""; // Remove the timer text
-  }
-}
-
-
-
-
-
-
-
-      // Enable the resend button after 3 seconds
-      setTimeout(function () {
-        document.getElementById('resendBtn').removeAttribute('hidden');
-      }, 3000);
-    </script> -->
 
 
 

@@ -48,9 +48,10 @@ const addWishlist = async (req, res) => {
     try {
         const currentUser = res.locals.user;
         const productId = req.params.productId;
-
+    console.log("productId",productId)
         // Retrieve product data from the Product model
         const productData = await productdb.findById(productId);
+      
         if (!productData) {
             return res.status(404).json({ error: 'Product not found' });
         }
@@ -63,7 +64,10 @@ const addWishlist = async (req, res) => {
 
         // Check if the product is already in the wishlist
         if (wishlist.products.some(product => product.product_id.equals(productId))) {
-            return res.status(400).json({ error: 'Product already in wishlist' });
+            console.log("Product already in wishlist")
+            return res.json({ error: 'Product already in wishlist' });
+
+            // return res.redirect('/?error=Product%20already%20in%20wishlist');
         }
 
         // Add the product to the wishlist and save the changes
@@ -71,14 +75,19 @@ const addWishlist = async (req, res) => {
             product_id: productId
         });
         await wishlist.save();
-        res.redirect('/ecom')
+        console.log("product added")
+        res.status(200).json({ success: 'Product added to wishlist!' });
+        // res.redirect('/')
 
-        // res.status(200).json({ success: true, message: 'Product added to wishlist' });
+        
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+
+
 
 
 const removeWishlistItem = async (req, res) => {

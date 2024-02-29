@@ -1,5 +1,11 @@
 <%- include('../admin_layout/adminHeader.ejs') %>
 
+
+
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10"> -->
+
+
+
 <section class="p-5">
 
     <div class="container">
@@ -67,7 +73,7 @@
                           <!-- <td>0901</td> -->
                           <td><b><%= products.productDetails.name%></b></td>
                           <td><%= products.productOffer%></td>
-                          <td><a class=" btn btn-danger text" href="/admin/deleteproOffer?id=<%= products._id %>" onclick="confirmDelete('<%= products._id %>' , event)">Delete</a></td>
+                          <td><a class=" btn btn-danger text" href="/admin/deleteproOffer?id=<%= products._id %>" onclick="confirmDelete('<%= products._id %>')">Delete</a></td>
                           <!-- <td><span class="badge rounded-pill alert-warning">Pending</span></td> -->
                           <!-- <td>03.12.2020</td> -->
                           <!-- <td class="text-end">
@@ -90,18 +96,49 @@
 </section>
 
 
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+  function confirmDelete(couponId) {
+      // Using SweetAlert instead of confirm
+      Swal.fire({
+          title: 'Are you sure want to delete the offer?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              // If the user confirms, proceed with deletion
+              window.location.href = "/admin/deleteproOffer?id=" + couponId;
+          }
+      });
+
+      // Prevent the default link behavior
+      event.preventDefault();
+  }
+</script>
+
+
 <script>
 
-function confirmDelete(couponId, event) {
-        var confirmation = confirm("Are you sure you want to delete?");
+// function confirmDelete(couponId, event) {
+//         var confirmation = confirm("Are you sure you want to delete?");
 
-        if (!confirmation) {
-            event.preventDefault();
-            // If the user clicks "Cancel", return false to prevent the default button behavior
-            console.log('Deletion canceled');
-            return false;
-        }
-    }
+//         if (!confirmation) {
+//             event.preventDefault();
+//             // If the user clicks "Cancel", return false to prevent the default button behavior
+//             console.log('Deletion canceled');
+//             return false;
+//         }
+//     }
 
 
   function validateForm() {

@@ -10,7 +10,7 @@ const wishController = require('../controllers/wishlistController');
 
 wish_route.get("/wishlist",wishController.wishlist)
 
-wish_route.get('/addwish/:productId', wishController.addWishlist); // Corrected route definition
+wish_route.post('/addwish/:productId', wishController.addWishlist); // Corrected route definition
 
 wish_route.get('/remove-wishlist/:productId', wishController.removeWishlistItem);
 
