@@ -968,7 +968,7 @@ const editPass = async (req, res) => {
       // Check if the old password matches the password stored in the database
       if (userdetails.password !== req.body.old) {
         console.log('Typed password does not match the stored password');
-        return res.status(400).json({ error: 'Typed password does not match the stored password' });
+        return res.status(400).json({ error: 'Old password does not match the stored password' });
       }
 
 
@@ -993,7 +993,7 @@ const editPass = async (req, res) => {
 
       }else{
         console.log("mismatched passwords")
-        return res.status(400).json({ error: 'Mismatched passwords' });
+        return res.status(400).json({ error: 'Mismatch in new password and confirm password' });
       }
 
     
