@@ -696,6 +696,7 @@ const invoiceGeneration = async (req, res, next) => {
     // Launch Puppeteer and generate PDF
     
 
+    
     const browser = await puppeteer.launch({ 
       headless: "new",
       executablePath: '/snap/bin/chromium',

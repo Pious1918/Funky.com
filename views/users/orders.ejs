@@ -110,7 +110,7 @@
                       <% if (items.items.status === 'pending' || items.items.status === 'shipped') { %>
                         <!-- Show Cancel Order button when status is 'pending' -->
                         <form id="cancelOrderForm" action="/cancelOrder?orderId=<%= items._id %>&&prodId=<%= items.items.product_id %>" method="POST">
-                            <button type="submit" class="btn btn-outline-dark btn-ecomm mt-3" onclick="confirmCancel('<%= items.items.product_id %>' , event)">Cancel Order</button>
+                            <button type="submit" class="btn btn-outline-dark btn-ecomm mt-3" onclick="confirmCancel('<%= items.items.product_id %>')">Cancel Order</button>
                         </form>
                     <% } else if (items.items.status === 'cancel') { %>
                         <!-- Show Cancelled message when status is 'cancel' -->
@@ -121,7 +121,7 @@
 
 
 
-                        <form>
+                      <form>
                           <button type="submit" class="btn btn-danger btn-outline-dark btn-ecomm mt-3" onclick="returnproduct('<%= items.items.product_id %>','<%= items._id %>',event)">Return Product</button>
                       </form>
                       
@@ -150,53 +150,129 @@
   </section>
 
 
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-  function confirmCancel(productId, event) {
-      var confirmation = confirm("Are you sure you want to Cancel the order?");
 
-      if (!confirmation) {
-          // If the user clicks "Cancel", prevent the default anchor tag behavior
-          event.preventDefault();
-          console.log('Deletion canceled');
-      }
-  }
+
+function confirmCancel(productId) {
+        // Show SweetAlert confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Are you sure you want to cancel the order?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, cancel it!',
+            cancelButtonText: 'No, keep it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If user clicks "Yes", submit the form
+                document.getElementById('cancelOrderForm').submit();
+            } 
+                // If user clicks "No", do nothing
+           
+             
+        });
+        event.preventDefault();
+    }
+
+
+
+  // function confirmCancel(productId, event) {
+  //     var confirmation = confirm("Are you sure you want to Cancel the order?");
+
+  //     if (!confirmation) {
+  //         // If the user clicks "Cancel", prevent the default anchor tag behavior
+  //         event.preventDefault();
+  //         console.log('Deletion canceled');
+  //     }
+  // }
+
+
+// function returnproduct(productId, orderId, event) {
+//     var returnReason = prompt("Please enter the reason for returning the product:");
+
+//     if (returnReason !== null) {
+//         // Create an XMLHttpRequest object
+//         var xhr = new XMLHttpRequest();
+
+//         // Configure it to send a POST request to the server
+//         xhr.open('POST', '/returnproduct?orderId=' + encodeURIComponent(orderId) + '&prodId=' + encodeURIComponent(productId), true);
+//         xhr.setRequestHeader('Content-Type', 'application/json');
+
+//         // Set up the data to send in the request body
+//         var data = {
+//             returnReason: returnReason
+//         };
+
+//         // Convert the data to JSON and send it
+//         xhr.send(JSON.stringify(data));
+
+//         // Handle the response from the server if needed
+//         xhr.onload = function () {
+//             if (xhr.status === 200) {
+//                 console.log('Return request processed successfully:', xhr.responseText);
+//                 // You can add more logic here based on the server response if needed
+//             } else {
+//                 console.error('Error processing return request:', xhr.statusText);
+//             }
+//         };
+//     } else {
+//       event.preventDefault();
+//         console.log('Return canceled');
+//     }
+// }
+
 
 
 function returnproduct(productId, orderId, event) {
-    var returnReason = prompt("Please enter the reason for returning the product:");
+  event.preventDefault();
+        // Show SweetAlert input dialog for the return reason
+        Swal.fire({
+            title: 'Enter Return Reason',
+            input: 'text',
+            inputLabel: 'Reason',
+            inputPlaceholder: 'Please enter the reason for returning the product',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If user clicks "Submit", proceed with sending the request
 
-    if (returnReason !== null) {
-        // Create an XMLHttpRequest object
-        var xhr = new XMLHttpRequest();
+                // Create an XMLHttpRequest object
+                var xhr = new XMLHttpRequest();
 
-        // Configure it to send a POST request to the server
-        xhr.open('POST', '/returnproduct?orderId=' + encodeURIComponent(orderId) + '&prodId=' + encodeURIComponent(productId), true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
+                // Configure it to send a POST request to the server
+                xhr.open('POST', '/returnproduct?orderId=' + encodeURIComponent(orderId) + '&prodId=' + encodeURIComponent(productId), true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
 
-        // Set up the data to send in the request body
-        var data = {
-            returnReason: returnReason
-        };
+                // Set up the data to send in the request body
+                var data = {
+                    returnReason: result.value
+                };
 
-        // Convert the data to JSON and send it
-        xhr.send(JSON.stringify(data));
+                // Convert the data to JSON and send it
+                xhr.send(JSON.stringify(data));
 
-        // Handle the response from the server if needed
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                console.log('Return request processed successfully:', xhr.responseText);
-                // You can add more logic here based on the server response if needed
+                // Handle the response from the server if needed
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        console.log('Return request processed successfully:', xhr.responseText);
+                        window.location.reload();
+                        // You can add more logic here based on the server response if needed
+                    } else {
+                        console.error('Error processing return request:', xhr.statusText);
+                    }
+                };
             } else {
-                console.error('Error processing return request:', xhr.statusText);
+                // If user clicks "Cancel", do nothing
+                console.log('Return canceled');
+               
             }
-        };
-    } else {
-      event.preventDefault();
-        console.log('Return canceled');
+        });
+        // event.preventDefault();
     }
-}
 
 
 

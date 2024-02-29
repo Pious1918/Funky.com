@@ -72,27 +72,7 @@
         <% products.forEach(product => { %> <% if (!product.isDeleted) { %>
         <div class="card border border-dark" style="height: 450px">
           <div class="position-relative overflow-hidden">
-            <div
-              class="product-options d-flex align-items-center justify-content-center gap-2 mx-auto position-absolute bottom-0 start-0 end-0"
-            >
-              <!-- <a href="javascript:;"><i class="bi bi-heart"></i></a> -->
-
-              <div class="icon-wishlist">
-            
-                
-           
-              <button type="button" class="btn btn-dark add-to-wishlist" data-product-id="<%= product._id %>" style="padding: 0.5rem;">
-                <i class="bi bi-heart" style="color: black;"></i>
-            </button>
-            
-            
-              
-               
-              </div>
-
-              <a href="javascript:;"><i class="bi bi-basket3"></i></a>
-            
-            </div>
+     
             <!-- change herereeeeeeeeee -->
             <a href="/productDetails/<%= product._id %>">
               <img

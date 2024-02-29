@@ -51,6 +51,7 @@
                       <div class="col-12">
                           <label for="exampleUsername" class="form-label">Enter New Password</label>
                           <input type="text" class="form-control rounded-0" name="newpass" id="new">
+                          <small id="passwordError" class="text-danger"></small>
                       </div>
 
                       <div class="col-12">
@@ -65,7 +66,7 @@
                         <button type="submit" class="btn btn-dark rounded-0 btn-ecomm w-100">Update Password</button>
                       </div>
                      
-                    </div><!---end row-->
+                    </div>
                  </form>
                </div>
              </div>
@@ -79,10 +80,10 @@
 
 </div>
   <!--end page content-->
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
   const updatePasswordForm = document.getElementById('updatePasswordForm');
 
   updatePasswordForm.addEventListener('submit', function(event) {
@@ -90,12 +91,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const newpass = document.getElementById('new').value;
     const confpass = document.getElementById('conf').value;
-    console.log("newpass",newpass)
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+
+    const passwordError = document.getElementById('passwordError');
+    if (!passwordRegex.test(newpass)) {
+      passwordError.textContent = 'Invalid password. It should be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.';
+      return;
+    } else {
+      passwordError.textContent = ''; // Clear any previous error message
+    }
 
     // Check if passwords match
     if (newpass !== confpass) {
       console.error('Passwords do not match');
-      alert('Passwords do not match');
+      Swal.fire({
+        icon: 'error',
+        title: 'Passwords do not match',
+        text: 'Please make sure the passwords match',
+      });
       return;
     }
 
@@ -103,23 +116,36 @@ document.addEventListener('DOMContentLoaded', function() {
     const formData = new FormData();
     formData.append('newpass', newpass);
     formData.append('confpass', confpass);
-    console.log("formData",formData)
+
     // Send Axios request
     axios.patch('/conPass', Object.fromEntries(formData))
       .then(function(response) {
         // Handle success
         console.log('Password updated successfully:', response.data);
-        alert('Password updated successfully');
-        window.location.href = '/login'; // Redirect to login page upon successful password update
+        Swal.fire({
+          icon: 'success',
+          title: 'Password updated successfully',
+          text: 'You can now log in with your new password',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = '/login'; // Redirect to login page upon successful password update
+          }
+        });
       })
       .catch(function(error) {
         // Handle error
         console.error('Password update failed:', error);
-        alert('Password update failed');
+        Swal.fire({
+          icon: 'error',
+          title: 'Password update failed',
+          text: 'An error occurred while updating your password. Please try again later',
+        });
       });
   });
 });
+
 </script>
+
 
 
   
