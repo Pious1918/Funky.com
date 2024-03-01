@@ -574,12 +574,20 @@ const statusChanger = async(req,res)=>{
 }
 
 
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
 const adminCoupon = async(req,res)=>{
   try {
 
     const currentCoupons = await couponModel.find()
     console.log("kk",currentCoupons)
-    res.render("coupon" ,{currentCoupons})
+    res.render("coupon" ,{currentCoupons ,formatDate})
     
   } catch (error) {
     console.log("error from adminCoupon",error)

@@ -33,8 +33,8 @@
                                   <!-- <th scope="row">3</th> -->
                                   <td><%= coupon.code %></td>
                                   <td><%= coupon.discountPercentage %></td>
-                                  <td><%= coupon.startingDate.toLocaleDateString() %></td>
-                                  <td><%= coupon.expirationDate.toLocaleDateString() %></td>
+                                  <td><%= formatDate(coupon.startingDate) %></td>
+                                  <td><%= formatDate(coupon.expirationDate) %></td>
                                   <td><%= coupon.minTotal %></td>
                                   <td><%= coupon.maxTotal %></td>
                                   <td><a class="btn btn-danger text" href="/admin/deletecou?id=<%= coupon._id %>" onclick="confirmDelete('<%= coupon._id %>' , event)">Delete</a></td>
