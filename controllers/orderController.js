@@ -638,7 +638,7 @@ const returnProduct = async (req, res) => {
     // });
 
     await WalletModel.findByIdAndUpdate(
-      userWallet._id,
+      userWallet,
       { 
         $inc: { balance: returnPrice },
         $push: { 
