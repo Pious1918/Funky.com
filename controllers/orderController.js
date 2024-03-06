@@ -633,9 +633,25 @@ const returnProduct = async (req, res) => {
     const returnPrice = orderdetails[0].totalAmount;
     console.log("returnPrice", returnPrice);
 
-    await WalletModel.findByIdAndUpdate(userWallet, {
-      $inc: { balance: returnPrice },
-    });
+    // await WalletModel.findByIdAndUpdate(userWallet, {
+    //   $inc: { balance: returnPrice },
+    // });
+
+    await WalletModel.findByIdAndUpdate(
+      userWallet._id,
+      { 
+        $inc: { balance: returnPrice },
+        $push: { 
+          transactions: { 
+            amount: returnPrice, 
+            description: "returned amount", // Description indicating amount was returned
+            createdAt: new Date() 
+          } 
+        } 
+      }
+    );
+
+
   } catch (error) {
     console.log("errror form returnProduct", error);
   }
