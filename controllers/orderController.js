@@ -192,6 +192,7 @@ const loadCheckout = async (req, res) => {
       },
     ]);
   
+    const coupons = await couponModel.find()
 
     totalAmount =
       userCart[0].counponPrice > 0
@@ -205,6 +206,7 @@ const loadCheckout = async (req, res) => {
       totalAmount,
       couponused,
       couponId,
+      coupons,
       insufficient,
       razorpaykey: "rzp_test_KmvOErc3UVHtQq",
     });

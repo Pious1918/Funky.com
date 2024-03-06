@@ -104,6 +104,12 @@
 
         <div class="col-xl-4 col-lg-4 d-flex justify-content-center justify-content-lg-end">
           <div class="ms-lg-4 mt-4 mt-lg-0" style="max-width: 320px;">
+            <p>Available coupons</p>
+            <hr>
+            <% coupons.forEach(cou => { %>
+              <p><%= cou.code %></p>
+              <% }); %>
+            <hr>
             <h6 class="mb-3">Order Summary</h6>
             
             <div class="d-flex justify-content-between">
