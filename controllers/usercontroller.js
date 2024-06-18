@@ -1206,6 +1206,7 @@ const ourStore = async (req, res) => {
       const searchQuery = req.query.search || '';
       const selectedCategories = req.query.selected ? req.query.selected.split(',').map(id => new ObjectId(id)) : [];
       let productDetails;
+    
 
       if (selectedCategories.length === 0) {
           productDetails = await productFromDb.find();
@@ -1228,7 +1229,7 @@ const ourStore = async (req, res) => {
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = Math.min(startIndex + itemsPerPage - 1, totalItems - 1);
       const paginatedProducts = productDetails.slice(startIndex, endIndex + 1);
-
+console.log("Haiii",productDetails)
       res.render("shop-grid", {
           categories,
           productDetails: paginatedProducts,
