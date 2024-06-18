@@ -114,7 +114,7 @@ const signup = async (req, res) => {
 
     const existuser = await userModel.findOne({ email: gemail });
     if (existuser) {
-      res.render("register" , {message:"email already existing"});
+      res.render("register" , {req,message:"email already existing"});
     }
     // gpassword = await securePassword(req.body.password)
 
