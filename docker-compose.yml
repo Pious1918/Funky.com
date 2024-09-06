@@ -21,7 +21,7 @@ services:
     volumes:
       - ./:/app
     environment:
-      MONGO_URI: mongodb+srv://funky:funky@funky.htheg30.mongodb.net/funky
+      MONGO_URL: mongodb+srv://funky:funky@funky.htheg30.mongodb.net/funky
     command: "npm start"
     # shows service interdependence. Backend service depends on mongodb service(ensures mongodb up and runs before backend start)
     depends_on:

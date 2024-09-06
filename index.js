@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const userRoute = require("./routes/userRoute");
 const path = require("path");
 app.use(express.json());
-// app.use(morgan("dev")); 
+
 const mongoose = require("mongoose");
 mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,
@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGODB_URL, {
 .catch((err) => {
   console.error("MongoDB connection error:", err);
 });
-
+console.log("urll iddd",process.env.MONGODB_URL)
 app.use(cookieParser());
 console.log("ppp",process.env.EMAIL) 
 var multer = require("multer");
