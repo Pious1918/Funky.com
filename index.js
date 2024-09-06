@@ -94,6 +94,7 @@ app.get("*", (req, res, next) => {
 
 
 app.listen(PORT, () => {
+  console.log("started")
   console.log(`Server is running on http://localhost:${PORT}`);
 });
  

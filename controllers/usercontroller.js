@@ -18,7 +18,7 @@ const couponCart = require("../models/appliedCoupon")
 const mailgen = require("mailgen");
 const referalmodel = require("../models/referralModel")
 
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 
 
 const jwt = require("jsonwebtoken");
