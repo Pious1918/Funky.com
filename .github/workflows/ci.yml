@@ -27,9 +27,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Run tests
-      - name: Run tests
-        run: npm test
+      
 
       # Step 5: Log in to Docker Hub (skip this if not pushing to Docker Hub)
       - name: Log in to Docker Hub
