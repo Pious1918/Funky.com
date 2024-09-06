@@ -17,4 +17,4 @@ EXPOSE 3000
 
 # in cmd refers the  default command to run when starting a container from this image
 # CMD ["npm", "start"]
-CMD ["./wait-for-it.sh", "mongodb:27017", "--", "npm", "start"]
+CMD ["mongodb:27017", "--", "npm", "start"]
