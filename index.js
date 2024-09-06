@@ -10,17 +10,14 @@ const path = require("path");
 app.use(express.json());
 
 const mongoose = require("mongoose");
-mongoose.connect(process.env.MONGODB_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGODB_URL, {})
 .then(() => {
   console.log("Connected to MongoDB");
 })
 .catch((err) => {
   console.error("MongoDB connection error:", err);
 });
-console.log("urll iddd",process.env.MONGODB_URL)
+console.log("urll iddd",typeof(process.env.MONGODB_URL))
 app.use(cookieParser());
 console.log("ppp",process.env.EMAIL) 
 var multer = require("multer");
