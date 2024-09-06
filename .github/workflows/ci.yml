@@ -1,5 +1,7 @@
 name: CI Pipeline with Docker
 
+
+
 on:
   push:
     branches:
@@ -11,7 +13,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      MONGODB_URL: mongodb+srv://funky:funky@funky.htheg30.mongodb.net/funky
     steps:
       # Step 1: Check out the code from GitHub
       - name: Checkout code
