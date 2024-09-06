@@ -17,4 +17,4 @@ EXPOSE 3000
 
 # in cmd refers the  default command to run when starting a container from this image
 # CMD ["npm", "start"]
-CMD ["mongodb:27017", "--", "npm", "start"]
+CMD ["npm", "start"]
